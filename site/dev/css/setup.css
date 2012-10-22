@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+/* Resets the body margin to 0 */
+body {
+	margin: 0;
+}
+
+/* Images should have no borders */
+img {
+	border: 0;
+}
