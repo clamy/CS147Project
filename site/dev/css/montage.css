@@ -1,0 +1,25 @@
+/* montage.css
+ * -----------
+ * Formatting for the montage application.
+ */
+ 
+ol#serentripity-montage {
+    list-style-type: none;
+    margin: 0;
+	padding: 0;
+}
+
+    ol#serentripity-montage > ol {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+ 
+        ol#serentripity-montage > ol > li {
+            display: inline-block;
+            margin-top: 2px;
+            margin-left: 2px;
+            width: 100px;
+            height: 100px;
+            background-position: center;
+        }

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+<title>Serentripity</title>
+<!-- Internal stylesheets -->
+<link href="css/montage.css" rel="stylesheet" type="text/css" />
+<!-- External libraries -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<!-- Internal libraries -->
+<script src="js/site.js"></script>
+<script src="js/montage.js"></script>
+</head>
+
+<body>
+<ol id="serentripity-montage">
+</ol>
+<script>
+var page = {}; 
+page.montage_settings = {
+    places: [
+        {
+            image_url: "img/places/main_quad.png",
+            distance_miles: 0,
+            importance_score: 1
+        },
+        {
+            image_url: "img/places/memchu.jpg",
+            distance_miles: 0.11,
+            importance_score: 0.8
+        },
+        {
+            image_url: "img/places/burghers.jpg",
+            distance_miles: 0.11,
+            importance_score: 0.8
+        },
+        {
+            image_url: "img/places/oval.jpg",
+            distance_miles: 0.11,
+            importance_score: 0.7
+        },
+        {
+            image_url: "img/places/hoover.jpg",
+            distance_miles: 0.15,
+            importance_score: 1
+        },
+        {
+            image_url: "img/places/totem.jpg",
+            distance_miles: 0.17,
+            importance_score: 0.4
+        },
+        {
+            image_url: "img/places/rodin.jpg",
+            distance_miles: 1.4,
+            importance_score: 0.6
+        },
+    ]
+};
+site.montage(page.montage_settings);
+</script>
+</body>
+
+</html>
