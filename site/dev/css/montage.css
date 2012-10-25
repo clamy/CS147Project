@@ -7,6 +7,10 @@ ol#serentripity-montage {
     list-style-type: none;
     margin: 0;
 	padding: 0;
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    -webkit-user-select: none; 
+    -o-user-select: none; 
 }
 
     ol#serentripity-montage > ol {
@@ -19,9 +23,17 @@ ol#serentripity-montage {
             display: inline-block;
             margin-top: 2px;
             margin-left: 2px;
-            width: 100px;
-            height: 100px;
             background-position: center;
-            color: #fff;
-            font-family: Arial;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
         }
+        
+            ol#serentripity-montage > ol > li > a {
+                display: block;
+                width: 200px;
+                height: 200px;
+                color: #fff;
+                text-decoration: none;
+                font-weight: 700;
+                text-shadow: 0 -1px #000, 1px 0 #000, 0 1px #000, -1px 0 #000;
+            }

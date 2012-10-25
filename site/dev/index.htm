@@ -1,19 +1,27 @@
-<!DOCTYPE html>
-
-<html>
-
+<!DOCTYPE html> 
+<html> 
 <head>
 <title>Serentripity</title>
-<!-- Internal stylesheets -->
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+<!-- Internal  -->
 <link href="css/montage.css" rel="stylesheet" type="text/css" />
-<!-- External libraries -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-<!-- Internal libraries -->
 <script src="js/site.js"></script>
 <script src="js/montage.js"></script>
-</head>
+</head> 
+<body> 
 
-<body>
+<div data-role="page">
+<div id="header" data-role="header">
+<a id="serentripity-back-button">Back</a>
+<h1>Serentripity</h1>
+<a id="serentripity-help-button">Help</a>
+</div><!-- /header -->
+
+<div data-role="content">
+<h2>Places near you</h2>
 <ol id="serentripity-montage">
 </ol>
 <script>
@@ -23,42 +31,52 @@ page.montage_settings = {
         {
             image_url: "img/places/main_quad.png",
             distance_miles: 0,
-            importance_score: 1
+            importance_score: 1,
+            page_url: "main_quad.htm"
         },
         {
             image_url: "img/places/memchu.jpg",
             distance_miles: 0.11,
-            importance_score: 0.8
+            importance_score: 0.8,
+            page_url: "memchu.htm"
         },
         {
             image_url: "img/places/burghers.jpg",
             distance_miles: 0.11,
-            importance_score: 0.8
+            importance_score: 0.8,
+            page_url: "burghers.htm"
         },
         {
             image_url: "img/places/oval.jpg",
             distance_miles: 0.11,
-            importance_score: 0.7
+            importance_score: 0.7,
+            page_url: "oval.htm"
         },
         {
             image_url: "img/places/hoover.jpg",
             distance_miles: 0.15,
-            importance_score: 1
+            importance_score: 1,
+            page_url: "hoover.htm"
         },
         {
             image_url: "img/places/totem.jpg",
             distance_miles: 0.17,
-            importance_score: 0.4
+            importance_score: 0.4,
+            page_url: "totem.htm"
         },
         {
             image_url: "img/places/rodin.jpg",
             distance_miles: 1.4,
-            importance_score: 0.6
+            importance_score: 0.6,
+            page_url: "rodin.htm"
         },
     ]
 };
 site.montage(page.montage_settings);
 </script>
+</div><!-- /content -->
+</div><!-- /page -->
+
 </body>
 
 </html>

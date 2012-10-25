@@ -11,11 +11,14 @@ site.montage = function (montage_settings) {
         var new_block = $("<ol />").appendTo(montage_list);
         for (var i = start_index; i < start_index + num_images; ++i) {
             console.log("Distance (miles): " + places[i].distance_miles);
-            var new_block_element = $("<li>")
+            var new_li = $("<li />");
+            var new_block_element = $("<a />")
                 .append(places[i].distance_miles + " mi");
-            new_block_element.css("background-image",
-                              "url(\"" + places[i].image_url + "\")")
-            new_block_element.appendTo(new_block);
+            new_block_element.attr("href", places[i].page_url);
+            new_li.css("background-image",
+                       "url(\"" + places[i].image_url + "\")")
+            new_block_element.appendTo(new_li);
+            new_li.appendTo(new_block);
         }
         console.log(new_block);
         return new_block;
