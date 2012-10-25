@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.ui-content {background-color: #BFBA9F}
+.ui-bar-b hi{
+    background-color: #2d5873;
+	}
+	
+.ui-bar-a { 
+   border: 1px solid #2A2A2A; 
+   background:#111111; 
+   color:#ffffff; 
+    }
