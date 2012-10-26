@@ -1719,8 +1719,8 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 .ui-grid-a > :nth-child(n) { width: 50%; margin-right: -.5px; }
 .ui-grid-a .ui-block-a { clear: left; }
 
-.ui-grid-a-vote .ui-block-a-vote { width: 5%; }
-.ui-grid-a-vote .ui-block-b-vote { width: 95%; }
+.ui-grid-a-vote .ui-block-a-vote { width: 15%; }
+.ui-grid-a-vote .ui-block-b-vote { width: 85%; }
 .ui-grid-a-vote .ui-block-a-vote { clear: left; }
 /* grid b: 33/33/33 */
 .ui-grid-b .ui-block-a, .ui-grid-b .ui-block-b, .ui-grid-b .ui-block-c { width: 33.25%; }
