@@ -24,19 +24,15 @@
 <div data-role="page">
 
 	<div data-role="header" data-theme="i">
+    <a href="#" data-icon="check" id="back" class="ui-btn-left">Back</a>
 		<h1>Serentripity</h1>
         
 	</div><!-- /header -->
 	<div data-role="content" class="ui-content">
-    <p>
-        <img width="200" src="img/logo_loading.png" /></p>
-    <p>
     <form action="index.htm" method="get">
-	<label for="user">Username:</label>
-	<input type="text" name="username" id="loadUser">
-	<label for="pass">Password:</label>
-	<input type="password" name="password" id="passUser">
-	<input type="submit" value="Add Info">
+	<label for="user">Add info on this place:</label>
+	<input type="text" size = "300" name="trivia" id="trivia">
+	<input type="submit" value="Add info">
 	</form></p>
     </div>
 
