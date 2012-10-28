@@ -1,0 +1,11 @@
+.ui-grid-a-vote { overflow: hidden; }
+.ui-block-a-vote { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
+.ui-block-b-vote{ margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
+.ui-block-a img.placeimg {width: 80%; height: auto;}
+.ui-block-b img.mapimg {max-height: 10%; width: auto; }
+
+.ui-grid-a-vote .ui-block-a-vote { width: 15%; }
+.ui-grid-a-vote .ui-block-b-vote { width: 85%; padding-left: 2em; }
+.ui-grid-a-vote .ui-block-a-vote { clear: left; }
+
+.ui-block-b-vote {line-height: 6em;}

@@ -1,5 +1,5 @@
 /*
-* jQuery Mobile Framework Git Build: SHA1: b49cc06499abf8f987cf90f35349cfac0918c939 <> Date: Tue Oct 2 11:22:34 2012 -0700
+* jQuery Mobile Framework Git Build: SHA1: c2d61e2e592c67519d9a9ed0ba796fa44787e136 <> Date: Tue Sep 25 10:38:12 2012 -0700
 * http://jquerymobile.com
 *
 * Copyright 2012 jQuery Foundation and other contributors
@@ -823,7 +823,7 @@ a.ui-link-inherit {
 .ui-icon-searchfield:after {
 	background: 						#666 /*{global-icon-color}*/;
 	background: 						rgba(0,0,0,.4) /*{global-icon-disc}*/;
-	background-image: url(img/icons-18-white.png) /*{global-icon-set}*/;
+	background-image: url(images/icons-18-white.png) /*{global-icon-set}*/;
 	background-repeat: no-repeat;
 	-moz-border-radius: 				9px;
 	-webkit-border-radius: 				9px;
@@ -834,7 +834,7 @@ a.ui-link-inherit {
 .ui-icon-alt {
 	background: 						#fff;
 	background: 						rgba(255,255,255,.3);
-	background-image: url(img/icons-18-black.png);
+	background-image: url(images/icons-18-black.png);
 	background-repeat: no-repeat;
 }
 /* HD/"retina" sprite
@@ -848,14 +848,14 @@ a.ui-link-inherit {
 	.ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back,
 	.ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after, 
 	.ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
-		background-image: url(img/icons-36-white.png);
+		background-image: url(images/icons-36-white.png);
 		-moz-background-size: 776px 18px;
 		-o-background-size: 776px 18px;
 		-webkit-background-size: 776px 18px;
 		background-size: 776px 18px;
 	}
 	.ui-icon-alt {
-		background-image: url(img/icons-36-black.png);
+		background-image: url(images/icons-36-black.png);
 	}
 }
 /* plus minus */
@@ -946,7 +946,7 @@ a.ui-link-inherit {
 }
 /* loading icon */
 .ui-icon-loading {
-	background: url(img/ajax-loader.gif);
+	background: url(images/ajax-loader.gif);
 	background-size: 46px 46px;
 }
 /* Button corner classes
@@ -1708,9 +1708,8 @@ div.ui-mobile-viewport { overflow-x: hidden; }
     100% { -moz-transform: translateX(0) scale(1); }
 }
 /* content configurations. */
-.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d, .ui-grid-a-vote { overflow: hidden; }
-.ui-block-a, .ui-block-a-vote, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
-.ui-block-b-vote{ margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
+.ui-grid-a, .ui-grid-b, .ui-grid-c, .ui-grid-d { overflow: hidden; }
+.ui-block-a, .ui-block-b, .ui-block-c, .ui-block-d, .ui-block-e { margin: 0; padding: 0; border: 0; float: left; min-height: 1px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box; }
 /* grid solo: 100 - single item fallback */
 .ui-grid-solo .ui-block-a { display: block; float: none; }
 /* Lower percentages for older browsers (i.e. IE7) to prevent wrapping. -.5px to fix BB5 wrap issue. */
@@ -1718,15 +1717,6 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 .ui-grid-a .ui-block-a, .ui-grid-a .ui-block-b { width: 49.95%; }
 .ui-grid-a > :nth-child(n) { width: 50%; margin-right: -.5px; }
 .ui-grid-a .ui-block-a { clear: left; }
-
-.ui-block-a img.placeimg {width: 80%; height: auto;}
-.ui-block-b img.mapimg {max-height: 10%; width: auto; }
-
-.ui-grid-a-vote .ui-block-a-vote { width: 15%; }
-.ui-grid-a-vote .ui-block-b-vote { width: 85%; padding-left: 2em; }
-.ui-grid-a-vote .ui-block-a-vote { clear: left; }
-
-.ui-block-b-vote {line-height: 6em;}
 /* grid b: 33/33/33 */
 .ui-grid-b .ui-block-a, .ui-grid-b .ui-block-b, .ui-grid-b .ui-block-c { width: 33.25%; }
 .ui-grid-b > :nth-child(n) { width: 33.333%; margin-right: -.5px; }
@@ -1816,7 +1806,7 @@ div.ui-mobile-viewport { overflow-x: hidden; }
 .ui-btn { display: block; text-align: center; cursor:pointer; position: relative; margin: .5em 0; padding: 0; }
 .ui-mini { margin-top: .25em; margin-bottom: .25em; }
 .ui-btn-left, .ui-btn-right, .ui-input-clear, .ui-btn-inline,
-.ui-grid-a .ui-btn, .ui-grid-b .ui-btn, .ui-grid-c .ui-btn, .ui-grid-d .ui-btn, .ui-grid-e .ui-btn, .ui-grid-solo .ui-btn, .ui-grid-a-vote { margin-right: 5px; margin-left: 5px; }
+.ui-grid-a .ui-btn, .ui-grid-b .ui-btn, .ui-grid-c .ui-btn, .ui-grid-d .ui-btn, .ui-grid-e .ui-btn, .ui-grid-solo .ui-btn { margin-right: 5px; margin-left: 5px; }
 .ui-btn-inner { font-size: 16px; padding: .6em 20px; min-width: .75em; display: block; position: relative; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; zoom: 1; }
 .ui-btn input, .ui-btn button { z-index: 2; }
 .ui-btn-left, .ui-btn-right, .ui-btn-inline { display: inline-block; vertical-align: middle; }
