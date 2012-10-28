@@ -1,7 +1,6 @@
 <?php
-// slte_settings.php
-// -----------------
-// This file contains the global settings for the website. It should be silent.
+// database_settings.php
+// ---------------------
 // Author: Yacine Merouchi (merouchi@stanford.edu)
 
 // Maintenance mode. This deactivates all pages.
@@ -14,3 +13,6 @@ if (SERENTRIPITY_MAINTENANCE) {
 // Activate or deactivate debug mode. The PHP code should only display error
 // or debug messages if this option is enabled.
 define("SERENTRIPIDITY_DEBUG", "0");
+
+$link = mysql_connect('mysql-user-master.stanford.edu', 'ccs147merouchi', 'fahveipo');
+mysql_select_db('c_cs147_merouchi');
