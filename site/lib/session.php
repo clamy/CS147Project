@@ -1,34 +1,45 @@
 <?php
-// This class contains all the logic for setting and getting user session
-// variables.
-class Session {
-	// The user's token.
-	// TODO: implement this.
-	private $token;
+require_once("../lib/database_settings.php");
 
-    // Generates a 60-character hash from a plain password.
-	public function get_password_hash($password) {
-		$hasher = new PasswordHash(8, FALSE);
-		$hash = $hasher->HashPassword($password);
-		return $hash;
-	}
-	
-	// Checks a password against a hash.
-	public function verify_password($password, $correct_hash) {
-		$hasher = new PasswordHash(8, FALSE);
-		$check = $hasher->CheckPassword($password, $correct_hash);
-		return $check;
-	}
-	
-	public function init_user_session() {
-		session_start();
-		if (array_key_exists("token", $_SESSION)) {
-			$this->token = $_SESSION["token"];
-		} else {
-			$this->token = false;
-		}
-	}
-	
-	public function __construct () {
-	}
+session_start();
+
+function GetUserPassword($username, $DBH) {
+    try {
+        $STH = $DBH->prepare("SELECT * FROM users WHERE username=:username");
+        $STH->bindParam(':username', $username);
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        $STH->execute();
+        if ($row = $STH->fetch()) {
+            return $row["password"];
+        } else {
+            return NULL;
+        }
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
 }
+
+function CheckPassword($username, $password, $DBH) {
+    $submitted = $password;
+    $actual = GetUserPassword($username, $DBH);
+    echo "<!--";
+    echo $submitted;
+    echo "  ";
+    echo $actual;
+    echo "-->";
+    if (empty($actual)) {
+        return FALSE;
+    }
+    return strcmp($submitted, $actual) == 0;
+}
+
+if (isset($_POST["logout"])) {
+	session_destroy();
+	session_start();
+} else if (isset($_POST["username"]) && isset($_POST["password"])) {
+    if (CheckPassword($_POST["username"], $_POST["password"], $DBH)) {
+        $_SESSION["username"] = $_POST["username"];
+    }
+}
+
+$username = $_SESSION["username"];
