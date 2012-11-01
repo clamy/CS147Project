@@ -21,30 +21,14 @@ function GetAssociatedArray($id, $DBH){
 
 $associated_array = GetAssociatedArray($id,$DBH);
 
-function GetPicturesArray($id,$DBH){
-	try {
-        $STH = $DBH->prepare("SELECT * FROM pictures WHERE placeid=:id");
-        $STH->bindParam(':id', $id);
-        $STH->setFetchMode(PDO::FETCH_ASSOC);
-        $STH->execute();
-        if ($row = $STH->fetchAll()) {
-            return $row;
-        } else {
-            return NULL;
-        }
-    } catch (PDOException $e) {
-        print $e->getMessage();
-    }
-}
-
-$pictures_array = GetPicturesArray($id,$DBH);
-
 ?>
 
 <!DOCTYPE html> 
 <html>
 
 <head>
+
+
 	<title>Serentripity</title> 
 	<meta charset="utf-8">
 	<meta name="apple-mobile-web-app-capable" content="yes">
@@ -55,16 +39,11 @@ $pictures_array = GetPicturesArray($id,$DBH);
 	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
     
-    <script type="text/javascript" src="photoswipe/lib/klass.min.js"></script>
-	<script type="text/javascript" src="photoswipe/code.photoswipe-3.0.4.min.js"></script>
-    
-
-});
 
 </head> 
 
 	
-<body> 
+<body > 
 <div data-role="page" data-add-back-btn="true">
 
 	<div data-role="header" data-theme="a">
@@ -79,18 +58,132 @@ $pictures_array = GetPicturesArray($id,$DBH);
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /header -->
-	<div data-role="content" data-theme="a">
+	<div data-role="content" data-theme="a" style="width:100%; height:100%; padding:0;">
     
+   <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+   
     
-    
+		
+		
+
+		<script type="text/javascript">
+		var map;
+		var wayA;
+		var wayB;
+		var debug;
+		
+		
+		
+		// This is the display window
+		var infowindow = new google.maps.InfoWindow({
+		    size: new google.maps.Size(150, 50)
+		});
+		
+		
+		// Create the marker
+		function createMarker(latlng, name, html) {
+		    var contentString = html;
+		    var marker = new google.maps.Marker({
+		        position: latlng,
+		        map: map
+		    });
+		
+		    google.maps.event.addListener(marker, 'click', function () {
+		        infowindow.setContent(contentString);
+		        infowindow.open(map, marker);
+		    });
+		    google.maps.event.trigger(marker, 'click');
+		    return marker;
+		}
+		
+		function success(position) {
+			console.log("The user's position is at");
+			debug = position;
+		    console.log(debug);
+		    
+		    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+		    var myOptions = {
+		        zoom: 15,
+		        center: latlng,
+		        mapTypeControl: false,
+		        navigationControlOptions: {
+		            style: google.maps.NavigationControlStyle.SMALL
+		        },
+		        mapTypeId: google.maps.MapTypeId.ROADMAP
+		    };
+		
+		    map = new google.maps.Map(document.getElementById("mapcanvas"), myOptions);
+		
+		    wayA = new google.maps.Marker({
+		        position: latlng,
+		        map: map,
+		        title: "You are here!",
+		        
+		    });
+			
+			var objectLatLng = new google.maps.LatLng(<?php echo $associated_array["lat"];?>,
+				<?php echo $associated_array["lng"];?>);
+			
+			wayB = new google.maps.Marker({
+		
+		                position: objectLatLng,
+		                map: map,
+		
+		    });
+		    
+		    var renderer;
+			
+			// Directions
+		    renderer = new google.maps.DirectionsRenderer({
+		        'draggable': true
+		    });
+		   	renderer.setMap(map);
+			service = new google.maps.DirectionsService();
+		
+		            service.route({
+		                'origin': wayA.getPosition(),
+		                'destination': wayB.getPosition(),
+		                'travelMode': google.maps.DirectionsTravelMode.WALKING
+		            }, function (result, status) {
+		            	
+		            	console.log("The route between the two points is");
+		            	debug = result;
+		    			console.log(debug);
+		    			
+		                if (status == 'OK') renderer.setDirections(result);
+		                	wayA.setMap(null);
+				            wayA = null;
+				            wayB.setMap(null);
+				            wayB = null;
+		            })
+					
+		}
+		
+		function error(msg) {
+		    var s = document.querySelector('#status');
+		    s.innerHTML = typeof msg == 'string' ? msg : "failed";
+		    s.className = 'fail';
+		}
+		
+		if (navigator.geolocation) {
+		    navigator.geolocation.getCurrentPosition(success, error);
+		} else {
+		    error('not supported');
+		}		
+		</script> 
+
     <ul data-role="listview">
     <li>
     <div class="ui-grid-a">
 		<div class="ui-block-a">
-            <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower/hoover_tower.jpg" width = "90%"></a>
+            <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower_w.jpg" width = "90%"></a>
        	</div>
 		<div class="ui-block-b">
-                	<a href="#popupMap" data-rel="popup" data-position-to="window" data-transition="fade"><img src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;zoom=15&amp;size=210x149&amp;markers=<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;sensor=false" width="90%"></a>
+                <a href="#popupMap" data-rel="popup" data-position-to="window" data-transition="fade"><img src="https://maps.googleapis.com/maps/api/staticmap?center=
+				<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;zoom=15&amp;size=210x149&amp;markers=
+				<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;sensor=false" width="90%"></a> 
+            
+                    
         </div>
 	</div><!-- /grid-a -->
     </li>
@@ -99,11 +192,11 @@ $pictures_array = GetPicturesArray($id,$DBH);
    			<h3>Pictures</h3>
    			<div class="ui-grid-a">
 				<div class="ui-block-a">
-            		<a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower/hoover_tower_h.jpg" width = "90%"></a>
+            		<a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower_h.jpg" width = "90%"></a>
             	</div>
 				<div class="ui-block-b">
                 	<a href="#popupPhoto2" data-rel="popup" data-position-to="window" data-transition="fade">
-            		<img src="img/places/hoover_tower/hoover_tower_w.jpg" width = "90%"></a>
+            		<img src="img/places/hoover_tower_w.jpg" width = "90%"></a>
             	</div>
 			</div><!-- /grid-a -->
 		</div>
@@ -148,11 +241,11 @@ $pictures_array = GetPicturesArray($id,$DBH);
         </li>
 	</ul>
     <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="d" data-corners="false">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower/hoover_tower_h.jpg" width = "85%">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower_h.jpg" width = "85%">
 	</div>
     
     <div data-role="popup" id="popupPhoto2" data-overlay-theme="a" data-theme="d" data-corners="false">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower/hoover_tower_w.jpg" width = "85%">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower_w.jpg" width = "85%">
 	</div>
     
     <div data-role="popup" id="popupAdd" data-theme="a" class="ui-corner-all">
@@ -169,11 +262,16 @@ $pictures_array = GetPicturesArray($id,$DBH);
 		</div>
     <div data-role="popup" id="popupHelp" data-theme="a" class="ui-corner-all">
     		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-    		<p>This is the help page</p>
+            <h3>Upvote/Downvote this place</h3>
+    		<p>Click on the upvote and downvote button in the navigation bar on top.</p>
+            <h3>Upvote/Downvote trivia</h3>
+            <p>Click on the up and down arrows next to the chosen trivia.</p>
+            <h3>Directions</h3>
+            <p>Click on the map to get directions to this place</p>
    	</div>
     
     <div data-role="popup" id="popupMap" data-overlay-theme="a" data-theme="d" data-corners="false">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;zoom=15&amp;size=210x300&amp;markers=<?php echo $associated_array["lat"];?>,<?php echo $associated_array["lng"];?>&amp;sensor=false" width="90%">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><div id="mapcanvas" style="height:350px;width:250px"></div>
 	</div>
     
     </div>
