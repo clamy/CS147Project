@@ -152,6 +152,14 @@ require("php/header.php");
 			var location = "img/places/"+data[0].file;
 			console.log(location);
 			$("#pictureW").attr("src",location);
+			$("#pictureWP").attr("src",location);
+			for(var i = 0; i<data.length; i++){
+				var str= '<img src="img/places/'+data[i].file+'" width = "100%"></a>';
+				console.log(str);
+				$("#pictureList").append(str);
+			}
+			
+			
 		}
 		console.log("Trying to get the pictures");
 		var ajax_request = $.getJSON(
@@ -177,14 +185,8 @@ require("php/header.php");
     <li>
     	<div data-role="collapsible" >
    			<h3>Pictures</h3>
-   			<div class="ui-grid-a">
-				<div class="ui-block-a">
-            		<a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower_h.jpg" width = "90%"></a>
-            	</div>
-				<div class="ui-block-b">
-                	<a href="#popupPhoto2" data-rel="popup" data-position-to="window" data-transition="fade">
-            		<img src="img/places/hoover_tower_w.jpg" width = "90%"></a>
-            	</div>
+   			<div id="pictureList" class="ui-grid-solo">
+				
 			</div><!-- /grid-a -->
 		</div>
     	</li>
@@ -228,11 +230,7 @@ require("php/header.php");
         </li>
 	</ul>
     <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="d" data-corners="false">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower_h.jpg" width = "85%">
-	</div>
-    
-    <div data-role="popup" id="popupPhoto2" data-overlay-theme="a" data-theme="d" data-corners="false">
-			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img src="img/places/hoover_tower_w.jpg" width = "85%">
+			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img id="pictureWP" width = "85%">
 	</div>
     
     <div data-role="popup" id="popupAdd" data-theme="a" class="ui-corner-all">
