@@ -20,30 +20,10 @@ function GetAssociatedArray($id, $DBH){
 }
 
 $associated_array = GetAssociatedArray($id,$DBH);
-
+require("php/header.php");
 ?>
 
-<!DOCTYPE html> 
-<html>
 
-<head>
-
-
-	<title>Serentripity</title> 
-	<meta charset="utf-8">
-	<meta name="apple-mobile-web-app-capable" content="yes">
- 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="viewport" content="width=device-width, initial-scale=1"> 
-
-	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-	<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
-	<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-    
-
-</head> 
-
-	
-<body > 
 <div data-role="page" data-add-back-btn="true">
 
 	<div data-role="header" data-theme="a">
@@ -62,11 +42,8 @@ $associated_array = GetAssociatedArray($id,$DBH);
     
    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
    
-    
-		
-		
-
 		<script type="text/javascript">
+		//Script for the map popup
 		var map;
 		var wayA;
 		var wayB;
@@ -97,9 +74,7 @@ $associated_array = GetAssociatedArray($id,$DBH);
 		}
 		
 		function success(position) {
-			console.log("The user's position is at");
-			debug = position;
-		    console.log(debug);
+			
 		    
 		    var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 		    var myOptions = {
@@ -146,9 +121,7 @@ $associated_array = GetAssociatedArray($id,$DBH);
 		                'travelMode': google.maps.DirectionsTravelMode.WALKING
 		            }, function (result, status) {
 		            	
-		            	console.log("The route between the two points is");
-		            	debug = result;
-		    			console.log(debug);
+		            	
 		    			
 		                if (status == 'OK') renderer.setDirections(result);
 		                	wayA.setMap(null);
@@ -170,13 +143,27 @@ $associated_array = GetAssociatedArray($id,$DBH);
 		} else {
 		    error('not supported');
 		}		
-		</script> 
-
+		</script>
+        
+     <script  type="text/javascript">
+		function onSuccess(data) {
+    		console.log("Success!");
+    		console.log(data);
+			var location = "img/places/"+data[0].file;
+			console.log(location);
+			$("#pictureW").attr("src",location);
+		}
+		console.log("Trying to get the pictures");
+		var ajax_request = $.getJSON(
+    		"php/get_pictures.php",
+    		{place_id: <?php echo $id?>},
+    	onSuccess);
+	</script>
     <ul data-role="listview">
     <li>
     <div class="ui-grid-a">
 		<div class="ui-block-a">
-            <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img src="img/places/hoover_tower_w.jpg" width = "90%"></a>
+            <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img id="pictureW" width = "90%"></a>
        	</div>
 		<div class="ui-block-b">
                 <a href="#popupMap" data-rel="popup" data-position-to="window" data-transition="fade"><img src="https://maps.googleapis.com/maps/api/staticmap?center=
@@ -278,5 +265,4 @@ $associated_array = GetAssociatedArray($id,$DBH);
 
 </div>
 
-</body>
-</html>
+<?php require("php/footer.php");?>
