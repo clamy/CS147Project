@@ -3,7 +3,7 @@
 // This script builds a montage of photos.
 
 site.montage = {};
-site.montage.prototype.getThumbnailCode = function (
+site.montage.getThumbnailCode = function (
         place, image, width_percent, height_percent) {
      var anchor_tag, anchor_tag_close, image_tag;
      anchor_tag = "<a href=\"info_page?place="
@@ -20,13 +20,13 @@ site.montage.prototype.getThumbnailCode = function (
      return anchor_tag + image_tag + anchor_tag_close;
 };
 
-site.montage.prototype.getSoloBlockCode = function (place, wide_image) {
+site.montage.getSoloBlockCode = function (place, wide_image) {
     return "<div class=\"ui-grid-solo\"><div class=\"ui-block-a\">"
         + getThumbnailCode(place, wide_image, "100", "100")
         + "</div></div>";
 };
 
-site.montage.prototype.getMultiBlockCode = function (places, wide_images,
+site.montage.getMultiBlockCode = function (places, wide_images,
         tall_images) {
     var left_column, right_column_start, right_column;
     left_column = "<div class=\"ui-grid-a\"><div class=\"ui-block-a\" >";

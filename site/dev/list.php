@@ -3,14 +3,7 @@ require("../lib/session.php");
 require("php/header.php");
 ?>
 <script>
-function display_places(places) {
-    console.log("Successfully fetched places: ");
-    console.log(places);
-}
-var ajax_request = $.getJSON(
-    "php/get_places.php",
-    {longitude: 0, latitude: 0},
-    display_places);
+site.getPlaces(function (data) {});
 </script>
 
 <div data-role="page" data-add-back-btn="true">

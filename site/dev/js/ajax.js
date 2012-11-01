@@ -1,4 +1,4 @@
-site.prototype.getPlaces = function (callback) {
+site.getPlaces = function (callback) {
     function success(places) {
         console.log("Successfully fetched places: ");
         console.log(places);
@@ -10,7 +10,7 @@ site.prototype.getPlaces = function (callback) {
         success);
 };
 
-site.prototype.getImages = function (place_id, callback) {
+site.getImages = function (place_id, callback) {
     function success(data) {
         console.log("Successfully fetched images: ");
         console.log(data);

@@ -16,7 +16,7 @@
 	<script src="jquery-1.8.2.min.js"></script>
 	<script src="jquery.mobile-1.2.0.js"></script>
     <script src="js/site.js"></script>
-    <script src="js/places.js"></script>
+    <script src="js/ajax.js"></script>
     <script src="js/montage.js"></script>
 </head> 
 	
