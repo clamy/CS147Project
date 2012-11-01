@@ -1,3 +1,7 @@
+<?php
+require("php/header.php");
+?>
+
 <div data-role="page">
 	<div data-role="content" data-theme="a">
    <?php
@@ -21,3 +25,7 @@
     	</div>
     </div>
 </div>
+
+<?php
+require("php/footer.php");
+?>

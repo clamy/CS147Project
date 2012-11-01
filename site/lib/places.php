@@ -1,3 +1,8 @@
+<?php
+require_once("database_settings.php");
+
+// This function fetches a list of places in JSON format, given a longitude
+// and latitude.
 // For now, this ignores location and just returns all the places.
 function GetPlacesFromLocation($longitude, $latitude, $DBH) {
     try {

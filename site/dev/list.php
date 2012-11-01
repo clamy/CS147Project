@@ -1,6 +1,17 @@
 <?php
+require("../lib/session.php");
 require("php/header.php");
 ?>
+<script>
+function display_places(places) {
+    console.log("Successfully fetched places: ");
+    console.log(places);
+}
+var ajax_request = $.getJSON(
+    "php/get_places.php",
+    {longitude: 0, latitude: 0},
+    display_places);
+</script>
 
 <div data-role="page" data-add-back-btn="true">
 
@@ -11,6 +22,7 @@ require("php/header.php");
 	</div><!-- /header -->
     
 	<div data-role="content" data-theme="a">
+        <!-- Username <?php echo $username ?> -->
     	<div data-role="collapsible"  data-collapsed="false">
    			<h3>Less than 0.5 miles away</h3>
             <div class="ui-grid-solo">
