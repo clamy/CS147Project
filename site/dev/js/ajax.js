@@ -18,6 +18,6 @@ site.getImages = function (place_id, callback) {
     }
     var ajax_request = $.getJSON(
         "php/get_pictures.php",
-        {place_id: 0},
+        {place_id: place_id},
         success);
 };
