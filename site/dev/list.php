@@ -23,7 +23,7 @@ var ajax_request = $.getJSON(
     
 	<div data-role="content" data-theme="a">
         <!-- Username <?php echo $username ?> -->
-    	<div data-role="collapsible"  data-collapsed="false">
+    	<div id="serentripity-montage" data-role="collapsible"  data-collapsed="false">
    			<h3>Less than 0.5 miles away</h3>
             <div class="ui-grid-solo">
 				<div class="ui-block-a">
