@@ -35,7 +35,19 @@ try {
     }
 	
 }
-
+$voteplace = $_GET["voteplace"];
+if($voteplace == 1){
+	$value = $_GET["value"];
+	try {
+        $STH = $DBH->prepare("UPDATE places SET score = score + :value WHERE id = :id");
+        $STH->bindParam(':id', $id);
+		$STH->bindParam(':value', $value);
+        $STH->execute();
+      
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+}
 $associated_array = GetAssociatedArray($id,$DBH);
 require("php/header.php");
 ?>
@@ -50,8 +62,8 @@ require("php/header.php");
         <div data-role="navbar">
 			<ul>
 				<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>
-                <li><a href="info_page.php" >Upvote</a></li>
-                <li><a href="info_page.php" >Downvote</a></li>
+                <li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false">Upvote</a></li>
+                <li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" >Downvote</a></li>
 			</ul>
 		</div><!-- /navbar -->
 	</div><!-- /header -->
@@ -203,7 +215,7 @@ require("php/header.php");
 				str+='</div>';				
 				str+='</li>';
 				$("#triviaList").append(str).trigger('create');
-				$("#triviaList").listview('refresh');
+				$("#triviaList").listview('refresh'); 
 				console.log(str);
 				
 				
@@ -240,19 +252,6 @@ require("php/header.php");
 			</div><!-- /grid-a -->
 		</div>
     </li>
-		
-		<!--<li><div class="ui-grid-solo">
-			<div class="ui-block-a">
-            	<div data-role="controlgroup" data-type="horizontal" data-mini="true">
-					<a href="index.html" data-role="button" data-icon="arrow-u" ></a>
-					<a href="index.html" data-role="button" data-icon="arrow-d" ></a>
-                
-           	 	</div>
-            	Exiled Aleksandr Solzhenitsyn lived on the 11th floor for some time upon invitation by Stanford 	University before he moved in 1976.
-            </div>
-			
-		</div>
-        </li> -->
 		
 	</ul>
     <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="d" data-corners="false">
