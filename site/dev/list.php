@@ -21,11 +21,29 @@ require("php/header.php");
     	</div>
     </div>
 </div>
-
+<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <script>
-var montage_element;
-montage_element =  $("#serentripity-montage");
-site.montage(montage_element);
+var lat ;
+var lng ;
+function success(position){
+	var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+	lat = latlng.lat();
+	lng = latlng.lng();
+	var montage_element;
+	montage_element =  $("#serentripity-montage");
+	site.montage(lat,lng,montage_element);
+}
+function error(msg) {
+	lat = 0;
+	lng = 0;
+	console.log(msg);
+}
+if (navigator.geolocation) {
+	navigator.geolocation.getCurrentPosition(success, error);
+} else {
+	error('not supported');
+}
+
 </script>
 
 

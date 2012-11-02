@@ -1,12 +1,14 @@
-site.getPlaces = function (callback) {
+site.getPlaces = function (lat,lng,callback) {
     function success(places) {
         console.log("Successfully fetched places: ");
         console.log(places);
         callback(places);
     }
+	
+	
     var ajax_request = $.getJSON(
         "php/get_places.php",
-        {longitude: 0, latitude: 0},
+        {longitude: lng, latitude: lat},
         success);
 };
 

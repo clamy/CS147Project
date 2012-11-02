@@ -2,7 +2,7 @@
 // ----------
 // This script builds a montage of photos.
 
-site.montage = function(target_element) {
+site.montage = function(lat,lng,target_element) {
     var images, places, that;
 
     // We save a reference to this function.
@@ -34,6 +34,7 @@ site.montage = function(target_element) {
 			 url = "img/places/" + url;
 			 console.log("adding image url " + url);
 		 	 image_tag.attr("src", url);
+			 
 			 anchor_tag.append(image_tag);
 			 callback(anchor_tag);
 		 }
@@ -44,8 +45,10 @@ site.montage = function(target_element) {
 		console.log("Getting solo block code for place");
 		console.log(place);
        	this.getThumbnailCode(place, "100", "100", true, function (anchor_tag) {
+			var distance = parseFloat(place.distance);
+			
 			var new_block = $("<div class=\"ui-grid-solo\"></div>")
-				.append($("<div class=\"ui-block-a\"></div>").append(anchor_tag));
+				.append($("<div class=\"ui-block-a\"></div>").append('<p>'+distance.toFixed(1)+' miles</p>').append(anchor_tag));
 			new_block.append("");
 			callback(new_block);
 		});
@@ -84,5 +87,5 @@ site.montage = function(target_element) {
         }
     };
 
-    site.getPlaces(function (data) { that.buildMontage(data); });
+    site.getPlaces(lat,lng,function (data) { that.buildMontage(data); });
 };
