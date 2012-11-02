@@ -12,8 +12,6 @@ site.getPlaces = function (callback) {
 
 site.getImages = function (place_id, callback) {
     function success(data) {
-        console.log("Successfully fetched images: ");
-        console.log(data);
         callback(data);
     }
     var ajax_request = $.getJSON(
