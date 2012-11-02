@@ -48,6 +48,20 @@ if($voteplace == 1){
         print $e->getMessage();
     }
 }
+$votetrivia = $_GET["votetrivia"];
+if($votetrivia == 1){
+	$value = $_GET["value"];
+	$trivia = $_GET["triviaid"];
+	try {
+        $STH = $DBH->prepare("UPDATE trivia SET score = score + :value WHERE id = :id");
+        $STH->bindParam(':id', $trivia);
+		$STH->bindParam(':value', $value);
+        $STH->execute();
+      
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+}
 $associated_array = GetAssociatedArray($id,$DBH);
 require("php/header.php");
 ?>
@@ -207,8 +221,12 @@ require("php/header.php");
 				str+='<div class="ui-grid-solo">';
 				str+='<div class="ui-block-a">';
 				str+='<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
-				str+='<a href="index.html" data-role="button" data-icon="arrow-u" ></a>';
-				str+='<a href="index.html" data-role="button" data-icon="arrow-d" ></a>';
+				var link = '"info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=1"';
+				console.log(link);
+				str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"></a>';
+				
+				str+='<a href="info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=-1"';
+				str+= ' data-role="button" data-icon="arrow-d" data-ajax="false" ></a>';
 				str+='</div>';
 				str+=data[i].text;
 				str+='</div>';
