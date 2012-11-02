@@ -1,7 +1,7 @@
 <?php
 require("../lib/database_settings.php");
 $id = $_GET["id"];
-
+echo $id;
 function GetAssociatedArray($id, $DBH){
 	try {
         $STH = $DBH->prepare("SELECT * FROM places WHERE id=:id");
@@ -13,6 +13,23 @@ function GetAssociatedArray($id, $DBH){
         } else {
             return NULL;
         }
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+
+}
+$adding = $_GET["adding"];
+echo $adding;
+if($adding == 1){
+	echo "i am adding stuff";
+	$text = $_GET["trivia"];
+
+try {
+        $STH = $DBH->prepare("INSERT INTO trivia (placeid,text) VALUES (:id,:text)");
+        $STH->bindParam(':id', $id);
+		$STH->bindParam(':text', $text);
+        $STH->execute();
+      
     } catch (PDOException $e) {
         print $e->getMessage();
     }
@@ -244,13 +261,13 @@ require("php/header.php");
     
     <div data-role="popup" id="popupAdd" data-theme="a" class="ui-corner-all">
     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-			<form>
-				
+			<form action="info_page.php" method="GET" data-ajax="false">
 				  
 		          <label for="un" class="ui-hidden-accessible">Trivia:</label>
-		          <input type="text" name="trivia" id="t" value="" data-theme="a" />
-
-		    	  <button type="submit" data-theme="b">Add trivia</button>
+		          <input type="text" name="trivia" value="" data-theme="a" />
+                  <input type="hidden" name="id" value="<?php echo $id;?>" />
+                  <input type="hidden" name="adding" value="1" />
+                  <button type="submit" data-theme="b">Add trivia</button>
 				
 			</form>
 		</div>
