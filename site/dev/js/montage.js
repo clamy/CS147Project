@@ -12,9 +12,9 @@ site.montage = function(target_element) {
         place, width_percent, height_percent, wide, callback) {
 		 // We first create the elements.
 		 var anchor_tag, image_tag;
-		 anchor_tag = $("<a href=\"info_page.php?place="
+		 anchor_tag = $("<a href=\"info_page.php?id="
 			 + place.id
-			 + "\">");
+			 + "\" data-ajax=\"false\">");
 		 image_tag = $("<img width=\""
 			 + width_percent
 			 + "%\" height=\""
@@ -40,7 +40,9 @@ site.montage = function(target_element) {
  		 site.getImages(place.id, addImageUrl);
 	};
 	
-	this.getSoloBlockCode = function (place, wide_image, callback) {
+	this.getSoloBlockCode = function (place, callback) {
+		console.log("Getting solo block code for place");
+		console.log(place);
        	this.getThumbnailCode(place, "100", "100", true, function (anchor_tag) {
 			var new_block = $("<div class=\"ui-grid-solo\"></div>")
 				.append($("<div class=\"ui-block-a\"></div>").append(anchor_tag));
@@ -72,15 +74,13 @@ site.montage = function(target_element) {
 	
     this.buildMontage = function(places) {
         console.log("Building the montage.");
-		//target_element.collapsibleset();
         for (var i = 0; i < places.length; ++i) {
-            site.getImages(places[0].id, function (images) {
-				function callback(new_block) {
-					target_element.append(new_block);
-
-				}
-				that.getSoloBlockCode(places[0], images[0], callback);
-            });
+			function callback(new_block) {
+				console.log("The block was generated, adding it to the page");
+				console.log(new_block);
+				target_element.append(new_block);
+			}
+			that.getSoloBlockCode(places[i], callback);
         }
     };
 
