@@ -70,7 +70,7 @@ require("php/header.php");
 <div data-role="page" data-add-back-btn="true">
 
 	<div data-role="header" data-theme="a">
-    	<a href="list.php" data-icon="arrow-l">Back</a>
+    	<a href="list.php" data-icon="arrow-l" data-ajax="false">Back</a>
 		<h1><?php echo $associated_array["name"];?></h1>
         <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
         <div data-role="navbar">

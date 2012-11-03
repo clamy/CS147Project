@@ -7,50 +7,59 @@ site.montage = function(lat,lng,target_element) {
 
     // We save a reference to this function.
     that = this;
-
-    this.getThumbnailCode = function (
-        place, width_percent, height_percent, wide, callback) {
-		 // We first create the elements.
+	
+    this.addThumbnail = function (width_percent, height_percent) {
 		 var anchor_tag, image_tag;
-		 anchor_tag = $("<a href=\"info_page.php?id="
-			 + place.id
-			 + "\" data-ajax=\"false\">");
-		 image_tag = $("<img width=\""
+		 anchor_tag = $("<a class=\"serentripity-place-anchor\"  data-ajax=\"false\">");
+		 image_tag = $("<img class=\"serentripity-place-image\" width=\""
 			 + width_percent
 			 + "%\" height=\""
 			 + height_percent
 			 + "%\" />");
-	     // Now we set up an AJAX call that will set up the source of the image when
-		 // it has been fetched from the database.
-	     var that = this;
-		 function addImageUrl(images) {
-			 console.log(images);
-			 var url;
-	         if (wide) {
-				 url = images[0].file;
-			 } else {
-				 url = images[1].file;
-			 }
-			 url = "img/places/" + url;
-			 console.log("adding image url " + url);
-		 	 image_tag.attr("src", url);
-			 
-			 anchor_tag.append(image_tag);
-			 callback(anchor_tag);
-		 }
- 		 site.getImages(place.id, addImageUrl);
+		  return anchor_tag.append(image_tag);
 	};
 	
-	this.getSoloBlockCode = function (place, callback) {
-		console.log("Getting solo block code for place");
-		console.log(place);
-       	this.getThumbnailCode(place, "100", "100", true, function (anchor_tag) {
-			var distance = parseFloat(place.distance);
+	this.getSoloBlock = function () {
+		console.log("Adding solo block to the list.");
+		var anchor_tag = this.addThumbnail("100", "100");
+		var new_block = $("<div class=\"ui-grid-solo\"></div>")
+			.append($("<div class=\"ui-block-a\"></div>").append('<p class="serentripity-place-distance"></p>').append(anchor_tag));
+		return new_block;
+	};
+	
+	this.generateBlocks = function (num_blocks) {
+		
+		while (num_blocks--) {
+			target_element.append( this.getSoloBlock());
 			
-			var new_block = $("<div class=\"ui-grid-solo\"></div>")
-				.append($("<div class=\"ui-block-a\"></div>").append('<p>'+distance.toFixed(1)+' miles</p>').append(anchor_tag));
-			new_block.append("");
-			callback(new_block);
+		}
+	};
+	
+	this.fillPlaceInfo = function (places) {
+		
+			
+			$("a.serentripity-place-anchor").each(function(i, obj){
+				$(obj).attr("href", 'info_page.php?id='+places[i].id);
+			});
+			$("p.serentripity-place-distance").each(function(i,obj){
+				
+				var distance = parseFloat(places[i].distance);
+				distance = distance.toFixed(1);
+				console.log(distance);
+				$(obj).append(distance+" miles");
+			});
+			
+			
+		
+	};
+	this.fillPlaceImages = function (places){
+		$("img.serentripity-place-image").each(function(i,obj){
+			
+			site.getImages(places[i].id, function( images){
+				console.log(images);
+				console.log(obj);
+				$(obj).attr("src",'img/places/'+images[0].file);
+			});
 		});
 	};
 	
@@ -77,14 +86,9 @@ site.montage = function(lat,lng,target_element) {
 	
     this.buildMontage = function(places) {
         console.log("Building the montage.");
-        for (var i = 0; i < places.length; ++i) {
-			function callback(new_block) {
-				console.log("The block was generated, adding it to the page");
-				console.log(new_block);
-				target_element.append(new_block);
-			}
-			that.getSoloBlockCode(places[i], callback);
-        }
+		this.generateBlocks(places.length);
+        this.fillPlaceInfo(places);
+		this.fillPlaceImages(places);
     };
 
     site.getPlaces(lat,lng,function (data) { that.buildMontage(data); });
