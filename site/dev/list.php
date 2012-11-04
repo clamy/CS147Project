@@ -1,5 +1,4 @@
 <?php
-require("../lib/session.php");
 require("php/header.php");
 ?>
 <div data-role="page" data-add-back-btn="true">

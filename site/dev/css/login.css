@@ -1,0 +1,13 @@
+#serentripity-login-form {
+    display: none;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#serentripity-login-message {
+    display: none;
+}
+
+#serentripity-login-error {
+    font-weight: 600;
+}

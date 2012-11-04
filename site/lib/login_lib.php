@@ -1,7 +1,8 @@
 <?php
-require_once("../lib/database_settings.php");
+// login_lib.php
+// =============
+// Contains the methods that check a user's credentials.
 
-session_start();
 
 function GetUserPassword($username, $DBH) {
     try {
@@ -22,24 +23,8 @@ function GetUserPassword($username, $DBH) {
 function CheckPassword($username, $password, $DBH) {
     $submitted = $password;
     $actual = GetUserPassword($username, $DBH);
-    echo "<!--";
-    echo $submitted;
-    echo "  ";
-    echo $actual;
-    echo "-->";
     if (empty($actual)) {
         return FALSE;
     }
     return strcmp($submitted, $actual) == 0;
 }
-
-if (isset($_POST["logout"])) {
-	session_destroy();
-	session_start();
-} else if (isset($_POST["username"]) && isset($_POST["password"])) {
-    if (CheckPassword($_POST["username"], $_POST["password"], $DBH)) {
-        $_SESSION["username"] = $_POST["username"];
-    }
-}
-
-$username = $_SESSION["username"];

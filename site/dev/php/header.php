@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="jquery.mobile-1.2.0.css" />
 
 	<link rel="stylesheet" href="css/loading.css" />
+	<link rel="stylesheet" href="css/login.css" />
     <link rel="stylesheet" href="css/jquery.mobile.swatch.i.css" />
 	
 	<script src="jquery-1.8.2.min.js"></script>
