@@ -4,6 +4,10 @@
     margin: 0 auto;
 }
 
+#serentripity-logout-form {
+    display: none;
+}
+
 #serentripity-login-message {
     display: none;
 }
