@@ -8,11 +8,12 @@ require("login_lib.php");
 
 $login_info = array();
 
-if (CheckPassword($_POST["username"], $_POST["password"], $DBH)) {
-    $login_info["username"] = $_POST["username"];
-    $login_info["token"] = $_POST["username"];
+$lowercase_username = strtolower($username);
+if (CheckPassword($lowercase_username, $_POST["password"], $DBH)) {
+    $login_info["username"] = $lowercase_username;
+    $login_info["token"] = $lowercase_username;
 } else {
-    $login_info["login_error"] = TRUE;
+    $login_info["login_error"] = "Wrong username or password.";
 }
 
 echo json_encode($login_info);

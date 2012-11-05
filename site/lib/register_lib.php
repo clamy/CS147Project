@@ -17,7 +17,7 @@ function ValidatePassword($password) {
 function CheckAvailableUsername($username, $DBH) {
     try {
         $STH = $DBH->prepare("SELECT username FROM users WHERE username=:username LIMIT 1");
-        $STH->bindParam(':username', strtolower($username));
+        $STH->bindParam(':username', $username);
         $STH->setFetchMode(PDO::FETCH_ASSOC);
         $STH->execute();
         if ($row = $STH->fetch()) {
@@ -34,7 +34,7 @@ function CheckAvailableUsername($username, $DBH) {
 function RegisterUser($username, $password, $DBH) {
     try {
         $STH = $DBH->prepare("INSERT INTO users (username, password) VALUE (:username, :password)");
-        $STH->bindParam(':username', $username);
+        $STH->bindParam(':username', strtolower($username));
         $STH->bindParam(':password', $password);
         $STH->execute();
     } catch (PDOException $e) {

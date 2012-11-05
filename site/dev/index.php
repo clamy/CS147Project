@@ -23,19 +23,22 @@ require("php/header.php");
 //var user_info = <?php json_encode(user_info); ?>;
 
 function fadeToLoggedInPage(login_response) {
-    $("#serentripity-login-form").fadeOut();
+    $("#serentripity-login-form").fadeOut(function () {
+        $("#serentripity-login-message").fadeIn();
+    });
     $("#serentripity-login-message").append("Logged in as " + login_response.username);
-    $("#serentripity-login-message").fadeIn();
 }
 
 function handleFormResponse(response) {
     console.log(response);
     if (response.login_error) {
         console.log("Got a wrong login");
-        $("#serentripity-login-error").text("Wrong username or password.");
+        $("#serentripity-login-error").text(response.login_error);
         $("#serentripity-login-error").fadeIn();
     } else if (response.register_error) {
         console.log("Got a registration error");
+        $("#serentripity-login-error").text(response.register_error);
+        $("#serentripity-login-error").fadeIn();
     } else {
         console.log("Got good login");
         fadeToLoggedInPage(response);
