@@ -16,12 +16,13 @@ require("php/header.php");
     	</div>
     	<div data-role="popup" id="popupHelp" data-theme="a" class="ui-corner-all">
     		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
-    		<p>This is the help page</p>
+    		<p>This page displays all the landmarks near your current location. To get started, pick a place you find interesting and click on it to find out more.</p>
+            <p>Troubleshooting: if you see a blank page, hit refresh and make sure you allow Serentripity to find your location.</p>
     	</div>
     </div>
 </div>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script>
+w<script>
 var lat ;
 var lng ;
 function success(position){
