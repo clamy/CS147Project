@@ -1,4 +1,7 @@
 <?php
+// TODO(all): fix a bug where nothing appears on this page from time to time, until
+// it is refreshed. I suspect this might be because of caching.
+// - yacinem
 require("php/header.php");
 ?>
 <div data-role="page" data-add-back-btn="true">

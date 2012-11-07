@@ -1,4 +1,7 @@
 <?php
+// TODO(yacinem): fix bug where this page is not refreshed and the login information is not displayed.
+// This happens when using the back button.
+
 session_start();
 if ($_POST["logout"]) {
     echo "<!-- logging out -->";
