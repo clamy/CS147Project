@@ -4,7 +4,7 @@ require("php/header.php");
 <div data-role="page" data-add-back-btn="true">
 
 	<div data-role="header" data-theme="a">
-    	<a href="loading.php" data-icon="arrow-l">Back</a>
+    	<a href="index.php" data-icon="arrow-l">Back</a>
 		<h1>Serentripity</h1>
         <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
 	</div><!-- /header -->

@@ -11,6 +11,7 @@ site.montage = function(lat,lng,target_element) {
     this.addThumbnail = function (width_percent, height_percent) {
 		 var anchor_tag, image_tag;
 		 anchor_tag = $("<a class=\"serentripity-place-anchor\"  data-ajax=\"false\">");
+		 if (
 		 image_tag = $("<img class=\"serentripity-place-image\" width=\""
 			 + width_percent
 			 + "%\" height=\""
@@ -26,6 +27,28 @@ site.montage = function(lat,lng,target_element) {
 			.append($("<div class=\"ui-block-a\"></div>").append('<p class="serentripity-place-distance"></p>').append(anchor_tag));
 		return new_block;
 	};
+		
+	this.getMultiBlock = function (places, wide_images, tall_images, num_images) {
+		console.log("Adding multi block to the list.");
+		var grid, left_column, right_column_start, right_column;
+		grid = $("<div class=\"ui-grid-a\"></div>");
+		left_column = $("<div class=\"ui-block-a\"></div>");
+		right_column = "<div class=\"ui-block-b\"></div>";
+		if (num_images > 2) {
+			right_column.append(this.addThumbnail("50", "50"));
+			right_column.append(this.addThumbnail("50", "50"));
+			if (num_images > 3) {
+				left_column.append(this.addThumbnail("50", "50"));
+				left_column.append(this.addThumbnail("50", "50"));
+			} else {
+				left_column.append(this.addThumbnail("50", "100"));
+			}
+		} else {
+			left_column.append(this.addThumbnail("50", "100"));
+			right_column.append(this.addThumbnail("50", "100"));
+		}
+		return grid.append(left_column).append(right_column);
+	};
 	
 	this.generateBlocks = function (num_blocks) {
 		
@@ -36,52 +59,25 @@ site.montage = function(lat,lng,target_element) {
 	};
 	
 	this.fillPlaceInfo = function (places) {
-		
-			
 			$("a.serentripity-place-anchor").each(function(i, obj){
 				$(obj).attr("href", 'info_page.php?id='+places[i].id);
 			});
 			$("p.serentripity-place-distance").each(function(i,obj){
-				
 				var distance = parseFloat(places[i].distance);
 				distance = distance.toFixed(1);
 				console.log(distance);
 				$(obj).append(distance+" miles");
 			});
-			
-			
-		
 	};
+
 	this.fillPlaceImages = function (places){
 		$("img.serentripity-place-image").each(function(i,obj){
-			
 			site.getImages(places[i].id, function( images){
 				console.log(images);
 				console.log(obj);
 				$(obj).attr("src",'img/places/'+images[0].file);
 			});
 		});
-	};
-	
-	this.getMultiBlockCode = function (places, wide_images, tall_images) {
-		var left_column, right_column_start, right_column;
-		left_column = "<div class=\"ui-grid-a\"><div class=\"ui-block-a\" >";
-		right_column = "</div><div class=\"ui-block-b\">";
-		 if (places.length == 3) {
-			 left_column = left_column + getThumbnailCode(places[0],
-					 tall_images[0], "50", "100");
-			 right_column = right_column
-				 + getThumbnailCode(places[1], tall_images[1], "50", "50")
-				 + getThumbnailCode(places[2], tall_images[2], "50", "50");
-		 } else {
-			 left_column = left_column
-				 + getThumbnailCode(places[0], tall_images[0], "50", "50")
-				 + getThumbnailCode(places[1], tall_images[1], "50", "50");
-			 right_column = right_column
-				 + getThumbnailCode(places[2], tall_images[2], "50", "50")
-				 + getThumbnailCode(places[3], tall_images[3], "50", "50");
-		 }
-		 return left_column + right_column + "</div></div>";
 	};
 	
     this.buildMontage = function(places) {
