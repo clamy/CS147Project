@@ -21,15 +21,25 @@ function GetAssociatedArray($id, $DBH){
 $adding = $_GET["adding"];
 echo $adding;
 if($adding == 1){
-	echo "i am adding stuff";
 	$text = $_GET["trivia"];
-
-try {
-        $STH = $DBH->prepare("INSERT INTO trivia (placeid,text) VALUES (:id,:text)");
+	try {
+        //$STH = $DBH->prepare("INSERT INTO trivia (placeid,text) VALUES (:id,:text)");
+		$STH = $DBH->prepare("SELECT COUNT(*) AS c from trivia WHERE placeid=:id and text=:text");
         $STH->bindParam(':id', $id);
 		$STH->bindParam(':text', $text);
+		$STH->setFetchMode(PDO::FETCH_ASSOC);		
         $STH->execute();
-      
+        $row = $STH->fetch();
+        $countTrivia = intval($row["c"]);
+        if ($countTrivia > 0) {
+			
+        }
+        else {
+        	$STH = $DBH->prepare("INSERT INTO trivia (placeid,text) VALUES (:id,:text)");
+        	$STH->bindParam(':id', $id);
+			$STH->bindParam(':text', $text);			
+        	$STH->execute();
+        }                      
     } catch (PDOException $e) {
         print $e->getMessage();
     }
@@ -73,7 +83,7 @@ require("php/header.php");
     	<a href="list.php" data-icon="arrow-l" data-ajax="false">Back</a>
 		<h1><?php echo $associated_array["name"];?></h1>
         <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
-        <div data-role="navbar" data-theme="b">
+        <div data-role="navbar">
 			<ul>
 				<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>
                 <li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false">Upvote</a></li>
@@ -247,9 +257,8 @@ require("php/header.php");
     		{place_id: <?php echo $id?>},
     	onSuccessTrivia);
 	</script>
-   
-    <ul id="triviaList" data-role="listview" data-theme="b">
-    <li>	
+    <ul id="triviaList" data-role="listview" >
+    <li>
     <div class="ui-grid-a">
 		<div class="ui-block-a">
             <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img id="pictureW" width = "90%"></a>
@@ -264,20 +273,20 @@ require("php/header.php");
 	</div><!-- /grid-a -->
     </li>
     <li>
-    	<div data-role="collapsible" data-theme = "a" >
+    	<div data-role="collapsible" >
    			<h3>Pictures</h3>
    			<div id="pictureList" class="ui-grid-solo">
 				
 			</div><!-- /grid-a -->
 		</div>
-        </li>
-	 
+    </li>
+		
 	</ul>
-    <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="a" data-corners="false">
+    <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="d" data-corners="false">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img id="pictureWP" width = "85%">
 	</div>
     
-    <div data-role="popup" id="popupAdd" data-theme ="a" class="ui-corner-all">
+    <div data-role="popup" id="popupAdd" data-theme="a" class="ui-corner-all">
     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
 			<form action="info_page.php" method="GET" data-ajax="false">
 				  
