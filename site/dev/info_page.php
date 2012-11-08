@@ -102,23 +102,42 @@ if($votetrivia == 1){
     }
 }
 $associated_array = GetAssociatedArray($id,$DBH);
+
+//This code checks if the user is logged in
+$logged_in = 0;
+if($_SESSION["username"]){
+	$logged_in = 1;
+}
 require("php/header.php");
 ?>
 
 
-<div data-role="page" data-add-back-btn="true">
+<div data-role="page" data-add-back-btn="true" id="page">
+	<script type="text/javascript">
+	//Script to hide the navbar if the user is not logged in
+		var logged = <?php echo $logged_in;?>;
+		if(logged == 1){
+			console.log("I am logged in");
+			var str ='<div data-role="footer">';
+			str += '<div data-role="navbar" id = "navbar">';
+			str += '<ul>';
+			str += '<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false">Upvote</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" >Downvote</a></li>';
+			str += '</ul>';
+			str += '</div>';
+			str += '</div>';
+			
+			$("#page").append(str);
+			
+	}
+	</script>
 
-	<div data-role="header" data-theme="a">
+	<div data-role="header" data-theme="a" id="header">
     	<a href="list.php" data-icon="arrow-l" data-ajax="false">Back</a>
 		<h1><?php echo $associated_array["name"];?></h1>
         <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
-        <div data-role="navbar">
-			<ul>
-				<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>
-                <li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false">Upvote</a></li>
-                <li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" >Downvote</a></li>
-			</ul>
-		</div><!-- /navbar -->
+       	
 	</div><!-- /header -->
 	<div data-role="content" data-theme="a" style="width:100%; height:100%; padding:0;">
     
@@ -259,14 +278,16 @@ require("php/header.php");
 				var str = '<li>';
 				str+='<div class="ui-grid-solo">';
 				str+='<div class="ui-block-a">';
-				str+='<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
-				var link = '"info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=1"';
-				console.log(link);
-				str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"></a>';
+				if(logged == 1){
+					str+='<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
+					var link = '"info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=1"';
+					
+					str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"></a>';
 				
-				str+='<a href="info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=-1"';
-				str+= ' data-role="button" data-icon="arrow-d" data-ajax="false" ></a>';
-				str+='</div>';
+					str+='<a href="info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=-1"';
+					str+= ' data-role="button" data-icon="arrow-d" data-ajax="false" ></a>';
+					str+='</div>';
+				}
 				str+=data[i].text;
 				str+='</div>';
 				str+='</div>';				
@@ -311,7 +332,7 @@ require("php/header.php");
     </li>
 		
 	</ul>
-    <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="d" data-corners="false">
+    <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="a" data-corners="false">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img id="pictureWP" width = "85%">
 	</div>
     
@@ -337,11 +358,13 @@ require("php/header.php");
             <p>Click on the map to get directions to this place</p>
    	</div>
     
-    <div data-role="popup" id="popupMap" data-overlay-theme="a" data-theme="d" data-corners="false">
+    <div data-role="popup" id="popupMap" data-overlay-theme="a" data-theme="a" data-corners="false">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><div id="mapcanvas" style="height:350px;width:250px"></div>
 	</div>
     
-    </div>
+    
+    
+   
 
 </div>
 
