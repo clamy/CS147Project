@@ -1,7 +1,8 @@
 <?php
+session_start();
 require("../lib/database_settings.php");
 $id = $_GET["id"];
-echo $id;
+
 function GetAssociatedArray($id, $DBH){
 	try {
         $STH = $DBH->prepare("SELECT * FROM places WHERE id=:id");
@@ -16,7 +17,22 @@ function GetAssociatedArray($id, $DBH){
     } catch (PDOException $e) {
         print $e->getMessage();
     }
+}
 
+function CheckLoggedIn($DBH) {
+		$username = $_SESSION["username"];
+		$STH = $DBH->prepare("SELECT * FROM users WHERE username=:uname");
+        $STH->bindParam(':uname', $username);
+		$STH->setFetchMode(PDO::FETCH_ASSOC);		
+		$STH->execute();
+        $row = $STH->fetch();
+        $userid = $row["userid"];
+        if (is_null($userid)) {
+        	echo "not logged";
+        	$_SESSION["loginalert"] = 1;
+        } else {
+        	 unset($_SESSION["loginalert"]);
+        }
 }
 $adding = $_GET["adding"];
 echo $adding;
@@ -46,13 +62,21 @@ if($adding == 1){
 	
 }
 $voteplace = $_GET["voteplace"];
-if($voteplace == 1){
+if ($voteplace == 1){	
+
 	$value = $_GET["value"];
 	try {
-        $STH = $DBH->prepare("UPDATE places SET score = score + :value WHERE id = :id");
-        $STH->bindParam(':id', $id);
-		$STH->bindParam(':value', $value);
-        $STH->execute();
+		CheckLoggedIn($DBH);
+		if (isset($notloggedin)) {
+		}
+        else {
+        	echo "logged";
+        	$STH = $DBH->prepare("UPDATE voteplace SET vote=:value WHERE placeid=:id AND userid=:uid");
+        	$STH->bindParam(':id', $id);
+			$STH->bindParam(':value', $value);
+			$STH->bindParam(':uid', $userid);
+        	$STH->execute();
+    	}
       
     } catch (PDOException $e) {
         print $e->getMessage();
@@ -63,11 +87,16 @@ if($votetrivia == 1){
 	$value = $_GET["value"];
 	$trivia = $_GET["triviaid"];
 	try {
-        $STH = $DBH->prepare("UPDATE trivia SET score = score + :value WHERE id = :id");
-        $STH->bindParam(':id', $trivia);
-		$STH->bindParam(':value', $value);
-        $STH->execute();
-      
+		CheckLoggedIn($DBH);
+		if (isset($notloggedin)) {
+		}
+		else {
+        	$STH = $DBH->prepare("UPDATE votetrivia SET vote=:value WHERE triviaid=:triviaid AND userid=:uid");
+    	    $STH->bindParam(':triviaid', $trivia);
+			$STH->bindParam(':value', $value);
+			$STH->bindParam(':uid', $userid);
+        	$STH->execute();
+      	}
     } catch (PDOException $e) {
         print $e->getMessage();
     }
@@ -316,4 +345,12 @@ require("php/header.php");
 
 </div>
 
-<?php require("php/footer.php");?>
+<?php 
+	if (isset($_SESSION["loginalert"])) {
+		echo "<script type=\"text/javascript\">alert('You must be logged in to do that!')</script>";
+	}
+	else {
+		echo "<script type=\"text/javascript\">alert('You are logged in!')</script>";	
+	}
+require("php/footer.php");
+?>
