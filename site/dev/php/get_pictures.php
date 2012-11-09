@@ -3,7 +3,12 @@ require("../../lib/pictures.php");
 
 $place_id = $_GET["place_id"];
 
-$pictures = GetPicturesById($place_id, $DBH);
+if (isset($_GET["mode"])) {
+    $mode = $_GET["mode"];
+    $pictures = GetPicturesByIdAndMode($place_id, $mode, $DBH);
+} else {
+    $pictures = GetPicturesById($place_id, $DBH);
+}
 echo $pictures;
 
 // Here is how to use this:

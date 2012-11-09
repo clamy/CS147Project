@@ -21,3 +21,16 @@ site.getImages = function (place_id, callback) {
         {place_id: place_id},
         success);
 };
+
+site.getImagesByMode = function (place_id, mode, callback) {
+    function success(data) {
+        callback(data);
+    }
+    var ajax_request = $.getJSON(
+        "php/get_pictures.php",
+        {
+            place_id: place_id,
+            mode: mode
+        },
+        success);
+};
