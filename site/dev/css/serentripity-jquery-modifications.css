@@ -3,8 +3,7 @@
 	background-image : url("../img/dark_bkg.png");
 }
 .ui-header{
-	border-width:8px 0px 8px 0px;
-	-moz-border-image:url("../img/medium_border.png") 8 8 8 8 repeat repeat;
-	-webkit-border-image:url("../img/medium_border.png") 8 8 8 8 repeat repeat;
-	border-image:url("../img/medium_border.png") 8 8 8 8 repeat repeat;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
 }

@@ -17,7 +17,7 @@
     <link rel="apple-touch-icon" href="img/startup_icon.jpg" />
 	<link rel="apple-touch-startup-image" href="img/logo_loading.png">
     
-	<link rel="stylesheet" href="css/jquery-mobile-theme/themes/serentripity-theme-7.css" />
+	<link rel="stylesheet" href="css/jquery-mobile-theme/themes/serentripity-theme.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" /> 
     <link rel="stylesheet" href="css/serentripity-jquery-modifications.css"/>
 	

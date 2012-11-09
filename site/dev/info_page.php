@@ -346,7 +346,8 @@ require("php/header.php");
 			console.log(location);
 			$("#pictureW").attr("src",location);
 			$("#pictureWP").attr("src",location);
-			for(var i = 0; i<data.length; i++){
+			for(var i = 1; i<data.length; i++){
+				
 				var str= '<img src="img/places/'+data[i].file+'" width = "100%"></a>';
 				console.log(str);
 				$("#pictureList").append(str);
