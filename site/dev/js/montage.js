@@ -89,21 +89,20 @@ site.montage = function(lat,lng,target_element) {
 
 	this.fillPlaceImages = function (places) {
 		$("img.serentripity-place-image").each(function(i, obj){
-			var aspect_ratio, image_index;
+			var aspect_ratio, image_mode;
 			/*
 			// Select a wide or tall image depending on the aspect ratio.
 			aspect_ratio = $(obj).width() / $(obj).height();
 			console.log("Aspect ratio " + aspect_ratio);
 		 	image_index =  aspect_ratio >= 1 ? 0 : 1;
 			*/
-			image_index = $(obj).hasClass("serentripity-place-image-tall") ? 1 : 0;
-			site.getImages(places[i].id, function(images) {
+			image_mode = $(obj).hasClass("serentripity-place-image-tall") ? "h" : "w";
+			site.getImagesByMode(places[i].id, image_mode, function(images) {
 				console.log("Fetched images: ");
 				console.log(images);
 				// TODO(all): make sure there are enough images for each monument!
-				image_index = Math.min(image_index, images.length);
-				console.log("Choosing image " + image_index);
-				$(obj).attr("src", "img/places/" + images[image_index].file);
+				console.log("Choosing image mode " + image_mode);
+				$(obj).attr("src", "img/places/" + images[0].file);
 			});
 		});
 	};

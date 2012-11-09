@@ -15,3 +15,17 @@ function GetPicturesById($id, $DBH) {
         print $e->getMessage();
     }
 }
+
+function GetPicturesByIdAndMode($id, $mode, $DBH) {
+    try {
+        $STH = $DBH->prepare("SELECT * FROM pictures WHERE placeid=:id AND mode=:mode");
+        $STH->bindParam(':id', $id);
+        $STH->bindParam(':mode', $mode);
+        $STH->setFetchMode(PDO::FETCH_ASSOC);
+        $STH->execute();
+        $results_array = $STH->fetchAll();
+        return json_encode($results_array); 
+    } catch (PDOException $e) {
+        print $e->getMessage();
+    }
+}
