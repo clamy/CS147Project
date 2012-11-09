@@ -2,7 +2,23 @@
 session_start();
 require("../lib/database_settings.php");
 $id = $_GET["id"];
+$logged_in = 0;
+$uid = 0;
 
+//Checks if we are logged in and gets userid -> we only do it once when getting the page
+if($_SESSION["username"]){
+	$logged_in = 1;
+	$STH = $DBH->prepare("SELECT * FROM users WHERE username=:name");
+	$STH->bindParam(':name', $_SESSION["username"]);
+    $STH->setFetchMode(PDO::FETCH_ASSOC);
+   	$STH->execute();
+	if ($row = $STH->fetch()) {
+           $uid = $row["userid"];
+    }
+	else{
+		$logged_in = 0;
+	}
+}
 function GetAssociatedArray($id, $DBH){
 	try {
         $STH = $DBH->prepare("SELECT * FROM places WHERE id=:id");
@@ -19,27 +35,13 @@ function GetAssociatedArray($id, $DBH){
     }
 }
 
-function CheckLoggedIn($DBH) {
-		$username = $_SESSION["username"];
-		$STH = $DBH->prepare("SELECT * FROM users WHERE username=:uname");
-        $STH->bindParam(':uname', $username);
-		$STH->setFetchMode(PDO::FETCH_ASSOC);		
-		$STH->execute();
-        $row = $STH->fetch();
-        $userid = $row["userid"];
-        if (is_null($userid)) {
-        	echo "not logged";
-        	$_SESSION["loginalert"] = 1;
-        } else {
-        	 unset($_SESSION["loginalert"]);
-        }
-}
+
 $adding = $_GET["adding"];
-echo $adding;
+
 if($adding == 1){
 	$text = $_GET["trivia"];
 	try {
-        //$STH = $DBH->prepare("INSERT INTO trivia (placeid,text) VALUES (:id,:text)");
+        
 		$STH = $DBH->prepare("SELECT COUNT(*) AS c from trivia WHERE placeid=:id and text=:text");
         $STH->bindParam(':id', $id);
 		$STH->bindParam(':text', $text);
@@ -63,19 +65,55 @@ if($adding == 1){
 }
 $voteplace = $_GET["voteplace"];
 if ($voteplace == 1){	
-
+	print "voting\n";
 	$value = $_GET["value"];
 	try {
-		CheckLoggedIn($DBH);
-		if (isset($notloggedin)) {
+		
+		if ($logged_in == 0) {
 		}
         else {
-        	echo "logged";
-        	$STH = $DBH->prepare("UPDATE voteplace SET vote=:value WHERE placeid=:id AND userid=:uid");
-        	$STH->bindParam(':id', $id);
-			$STH->bindParam(':value', $value);
-			$STH->bindParam(':uid', $userid);
+        	//Check if we already have no vote for the place
+			print "logged in\n";
+			
+        	$STH = $DBH->prepare("SELECT * FROM voteplace WHERE userid = :uid AND placeid = :placeid ");
+        	$STH->bindParam(':placeid', $id);
+			$STH->bindParam(':uid', $uid);
         	$STH->execute();
+			$difference = $value;
+			if($row = $STH->fetch()){
+				print "has row\n";
+				//We need to compute the new score
+				if($value == $row["vote"]){
+					//We are tacking back our vote
+					$difference = -$value;
+					$value = 0;
+				}
+				else{
+					//We already have a different vote
+					$difference = $value - $row["vote"];
+				}
+				//We already have an entry, so we update it
+        		$STH = $DBH->prepare("UPDATE voteplace SET vote=:value WHERE placeid=:id AND userid=:uid");
+        		$STH->bindParam(':id', $id);
+				$STH->bindParam(':value', $value);
+				$STH->bindParam(':uid', $uid);
+        		$STH->execute();
+			}
+			else{
+				print "inserting\n";
+				//We don't have an entry, so we create it
+				$STH = $DBH->prepare("INSERT INTO voteplace (placeid,userid,vote) VALUES (:id,:uid,:vote)");
+        		$STH->bindParam(':id', $id);
+				$STH->bindParam(':uid', $uid);
+				$STH->bindParam(':vote', $value);			
+        		$STH->execute();
+			}
+			
+			// DO NOT DELETE : we NEED to update the trivia table as well
+			$STH = $DBH->prepare("UPDATE places SET score = score + :value WHERE id = :id");
+  			$STH->bindParam(':id', $id);
+  			$STH->bindParam(':value', $difference);
+	  		$STH->execute();
     	}
       
     } catch (PDOException $e) {
@@ -87,14 +125,14 @@ if($votetrivia == 1){
 	$value = $_GET["value"];
 	$trivia = $_GET["triviaid"];
 	try {
-		CheckLoggedIn($DBH);
-		if (isset($notloggedin)) {
+		
+		if ($logged_in == 0) {
 		}
 		else {
         	$STH = $DBH->prepare("UPDATE votetrivia SET vote=:value WHERE triviaid=:triviaid AND userid=:uid");
     	    $STH->bindParam(':triviaid', $trivia);
 			$STH->bindParam(':value', $value);
-			$STH->bindParam(':uid', $userid);
+			$STH->bindParam(':uid', $uid);
         	$STH->execute();
       	}
     } catch (PDOException $e) {
@@ -104,10 +142,7 @@ if($votetrivia == 1){
 $associated_array = GetAssociatedArray($id,$DBH);
 
 //This code checks if the user is logged in
-$logged_in = 0;
-if($_SESSION["username"]){
-	$logged_in = 1;
-}
+
 require("php/header.php");
 ?>
 
@@ -122,13 +157,32 @@ require("php/header.php");
 			str += '<div data-role="navbar" id = "navbar">';
 			str += '<ul>';
 			str += '<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>';
-			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false">Upvote</a></li>';
-			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" >Downvote</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false" id="upvote">Upvote</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" id="downvote">Downvote</a></li>';
 			str += '</ul>';
 			str += '</div>';
 			str += '</div>';
 			
 			$("#page").append(str);
+			//Script to highlight the buttons if we have already voted
+			function onSuccess(data) {
+    			if(data.length > 0){
+					var placevote = data[0].vote;
+					
+					
+					if(placevote == 1){
+						$("#upvote").addClass("ui-btn-active");
+					}
+					else if(placevote == -1){
+						$("#downvote").addClass("ui-btn-active");
+					}
+				}
+			
+			
+			
+			}
+		
+			var ajax_request = $.getJSON("php/get_vote_place.php",{placeid: <?php echo $id?>,uid: <?php echo $uid;?>},onSuccess);
 			
 	}
 	</script>
@@ -369,11 +423,6 @@ require("php/header.php");
 </div>
 
 <?php 
-	if (isset($_SESSION["loginalert"])) {
-		echo "<script type=\"text/javascript\">alert('You must be logged in to do that!')</script>";
-	}
-	else {
-		echo "<script type=\"text/javascript\">alert('You are logged in!')</script>";	
-	}
+	
 require("php/footer.php");
 ?>
