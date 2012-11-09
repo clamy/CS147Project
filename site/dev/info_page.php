@@ -109,7 +109,7 @@ if ($voteplace == 1){
         		$STH->execute();
 			}
 			
-			// DO NOT DELETE : we NEED to update the trivia table as well
+			// DO NOT DELETE : we NEED to update the place table as well
 			$STH = $DBH->prepare("UPDATE places SET score = score + :value WHERE id = :id");
   			$STH->bindParam(':id', $id);
   			$STH->bindParam(':value', $difference);
@@ -124,17 +124,54 @@ $votetrivia = $_GET["votetrivia"];
 if($votetrivia == 1){
 	$value = $_GET["value"];
 	$trivia = $_GET["triviaid"];
-	try {
-		
-		if ($logged_in == 0) {
+	try{
+	if ($logged_in == 0) {
 		}
-		else {
-        	$STH = $DBH->prepare("UPDATE votetrivia SET vote=:value WHERE triviaid=:triviaid AND userid=:uid");
-    	    $STH->bindParam(':triviaid', $trivia);
-			$STH->bindParam(':value', $value);
+        else {
+        	//Check if we already have no vote for the place
+			print "logged in\n";
+			
+        	$STH = $DBH->prepare("SELECT * FROM votetrivia WHERE userid = :uid AND triviaid = :triviaid ");
+        	$STH->bindParam(':triviaid', $trivia);
 			$STH->bindParam(':uid', $uid);
         	$STH->execute();
-      	}
+			$difference = $value;
+			if($row = $STH->fetch()){
+				print "has row\n";
+				//We need to compute the new score
+				if($value == $row["vote"]){
+					//We are tacking back our vote
+					$difference = -$value;
+					$value = 0;
+				}
+				else{
+					//We already have a different vote
+					$difference = $value - $row["vote"];
+				}
+				//We already have an entry, so we update it
+        		$STH = $DBH->prepare("UPDATE votetrivia SET vote=:value WHERE triviaid=:id AND userid=:uid");
+        		$STH->bindParam(':id', $trivia);
+				$STH->bindParam(':value', $value);
+				$STH->bindParam(':uid', $uid);
+        		$STH->execute();
+			}
+			else{
+				print "inserting\n";
+				//We don't have an entry, so we create it
+				$STH = $DBH->prepare("INSERT INTO votetrivia (triviaid,userid,vote) VALUES (:id,:uid,:vote)");
+        		$STH->bindParam(':id', $trivia);
+				$STH->bindParam(':uid', $uid);
+				$STH->bindParam(':vote', $value);			
+        		$STH->execute();
+			}
+			
+			// DO NOT DELETE : we NEED to update the trivia table as well
+			$STH = $DBH->prepare("UPDATE trivia SET score = score + :value WHERE id = :id");
+  			$STH->bindParam(':id', $trivia);
+  			$STH->bindParam(':value', $difference);
+	  		$STH->execute();
+    	}
+      
     } catch (PDOException $e) {
         print $e->getMessage();
     }
@@ -324,6 +361,21 @@ require("php/header.php");
     	onSuccess);
 	</script>
     <script  type="text/javascript">
+		//Script to highlight the buttons for a specific trivia id
+		function onSuccessId(data){
+			if(data.length > 0){
+					var triviavote = data[0].vote;
+					
+					if(triviavote == 1){
+						var upname = "#up"+data[0].triviaid;
+						$(upname).addClass("ui-btn-active");
+					}
+					else if(triviavote == -1){
+						var downname = "#down"+data[0].triviaid;
+						$(downname).addClass("ui-btn-active");
+					}
+			}
+		}
 		//Script to get the trivia
 		function onSuccessTrivia(data) {
     		console.log("Success!");
@@ -336,11 +388,17 @@ require("php/header.php");
 					str+='<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
 					var link = '"info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=1"';
 					
-					str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"></a>';
+					str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"'
+					str += 'id="up'+data[i].id+'"';
+					str+='></a>';
 				
 					str+='<a href="info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=-1"';
-					str+= ' data-role="button" data-icon="arrow-d" data-ajax="false" ></a>';
+					str+= ' data-role="button" data-icon="arrow-d" data-ajax="false"'
+					str += 'id="down'+data[i].id+'"';
+					str+='></a>';
 					str+='</div>';
+					
+					
 				}
 				str+=data[i].text;
 				str+='</div>';
@@ -348,7 +406,10 @@ require("php/header.php");
 				str+='</li>';
 				$("#triviaList").append(str).trigger('create');
 				$("#triviaList").listview('refresh'); 
-				console.log(str);
+				
+				if(logged == 1){
+					var ajax_request = $.getJSON("php/get_vote_trivia.php",{triviaid: data[i].id,uid: <?php echo $uid;?>},onSuccessId);
+				}
 				
 				
 			}
