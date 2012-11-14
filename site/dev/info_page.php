@@ -440,13 +440,13 @@ require("php/header.php");
     </li>
     <li>
     	<div data-role="collapsible" >
-   			<h3>Pictures</h3>
+   			<h3>More Pictures</h3>
    			<div id="pictureList" class="ui-grid-solo">
 				
 			</div><!-- /grid-a -->
 		</div>
     </li>
-		
+	<li data-role="list-divider">User Trivia</li>	
 	</ul>
     <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="a" data-corners="false">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img id="pictureWP" width = "85%">
@@ -466,10 +466,11 @@ require("php/header.php");
 		</div>
     <div data-role="popup" id="popupHelp" data-theme="a" class="ui-corner-all">
     		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+            
             <h3>Upvote/Downvote this place</h3>
-    		<p>Click on the upvote and downvote button in the navigation bar on top.</p>
+    		<p>If you are logged in, click on the upvote and downvote button in the navigation bar on top.</p>
             <h3>Upvote/Downvote trivia</h3>
-            <p>Click on the up and down arrows next to the chosen trivia.</p>
+            <p>If you are logged in, click on the up and down arrows next to the chosen trivia.</p>
             <h3>Directions</h3>
             <p>Click on the map to get directions to this place</p>
    	</div>
