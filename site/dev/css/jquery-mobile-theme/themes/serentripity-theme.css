@@ -17,7 +17,7 @@
 .ui-bar-a {
 	border: 1px solid #3b424c /*{a-bar-border}*/;
 	background: #3b424c /*{a-bar-background-color}*/;
-	color: #b29c85 /*{a-bar-color}*/;
+	color: #ffffff /*{a-bar-color}*/;
 	font-weight: bold;
 	text-shadow: 0 /*{a-bar-shadow-x}*/ 1px /*{a-bar-shadow-y}*/ 1px /*{a-bar-shadow-radius}*/ #444444 /*{a-bar-shadow-color}*/;
 	background-image: url("../../../img/medium_bkg.png");
@@ -53,7 +53,7 @@
 .ui-body-a,
 .ui-overlay-a {
 	border: 1px solid #28212b /*{a-body-border}*/;
-	color: #b29c85 /*{a-body-color}*/;
+	color: #ffffff /*{a-body-color}*/;
 	text-shadow: 0 /*{a-body-shadow-x}*/ 1px /*{a-body-shadow-y}*/ 0 /*{a-body-shadow-radius}*/ #444444 /*{a-body-shadow-color}*/;
 	background: #1d181f /*{a-body-background-color}*/;
 	background-image: url("../../../img/dark_bkg.png");
@@ -70,7 +70,7 @@
 	 font-family: Helvetica Neue /*{global-font-family}*/;
 }
 .ui-body-a .ui-link-inherit {
-	color: #b29c85 /*{a-body-color}*/;
+	color: #ffffff /*{a-body-color}*/;
 }
 
 .ui-body-a .ui-link {
@@ -94,13 +94,13 @@
 	border: 1px solid #3b424c /*{a-bup-border}*/;
 	background: #3b424c /*{a-bup-background-color}*/;
 	font-weight: bold;
-	color: #b29c85 /*{a-bup-color}*/;
+	color: #ffffff /*{a-bup-color}*/;
 	text-shadow: 0 /*{a-bup-shadow-x}*/ 1px /*{a-bup-shadow-y}*/ 0 /*{a-bup-shadow-radius}*/ #444444 /*{a-bup-shadow-color}*/;
 	background-image: url("../../../img/medium_bkg.png");
 }
 .ui-btn-up-a:visited,
 .ui-btn-up-a a.ui-link-inherit {
-	color: #b29c85 /*{a-bup-color}*/;
+	color: #ffffff /*{a-bup-color}*/;
 }
 .ui-btn-hover-a {
 	border: 1px solid #434b57 /*{a-bhover-border}*/;
@@ -142,15 +142,10 @@
 .ui-bar-b {
 	border: 1px solid #b29c85 /*{b-bar-border}*/;
 	background: #b29c85 /*{b-bar-background-color}*/;
-	color: #1d181f /*{b-bar-color}*/;
+	color : #3b424c /*{b-bar-color}*/;
 	font-weight: bold;
-	text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 1px /*{b-bar-shadow-radius}*/ #eeeeee /*{b-bar-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #c3ab92 /*{b-bar-background-start}*/), to( #a08c77 /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #c3ab92 /*{b-bar-background-start}*/, #a08c77 /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #c3ab92 /*{b-bar-background-start}*/, #a08c77 /*{b-bar-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #c3ab92 /*{b-bar-background-start}*/, #a08c77 /*{b-bar-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #c3ab92 /*{b-bar-background-start}*/, #a08c77 /*{b-bar-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #c3ab92 /*{b-bar-background-start}*/, #a08c77 /*{b-bar-background-end}*/);
+	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #fb9988 /*{global-active-shadow-color}*/;
+	background-image: url("../../../img/red_bkg.png");
 }
 .ui-bar-b .ui-link-inherit {
 	color: #1d181f /*{b-bar-color}*/;
@@ -294,7 +289,7 @@
 .ui-bar-c {
 	border: 1px solid #3b424c /*{c-bar-border}*/;
 	background: #3b424c /*{c-bar-background-color}*/;
-	color: #b29c85 /*{c-bar-color}*/;
+	color: #ffffff /*{c-bar-color}*/;
 	font-weight: bold;
 	text-shadow: 0 /*{c-bar-shadow-x}*/ 1px /*{c-bar-shadow-y}*/ 1px /*{c-bar-shadow-radius}*/ #444444 /*{c-bar-shadow-color}*/;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #404853 /*{c-bar-background-start}*/), to( #353b44 /*{c-bar-background-end}*/)); /* Saf4+, Chrome */
@@ -305,7 +300,7 @@
 	background-image:         linear-gradient( #404853 /*{c-bar-background-start}*/, #353b44 /*{c-bar-background-end}*/);
 }
 .ui-bar-c .ui-link-inherit {
-	color: #b29c85 /*{c-bar-color}*/;
+	color: #ffffff /*{c-bar-color}*/;
 }
 
 .ui-bar-c a.ui-link {
@@ -381,7 +376,7 @@
 	border: 1px solid #3b424c /*{c-bup-border}*/;
 	background: #3b424c /*{c-bup-background-color}*/;
 	font-weight: bold;
-	color: #b29c85 /*{c-bup-color}*/;
+	color: #ffffff /*{c-bup-color}*/;
 	text-shadow: 0 /*{c-bup-shadow-x}*/ 1px /*{c-bup-shadow-y}*/ 0 /*{c-bup-shadow-radius}*/ #444444 /*{c-bup-shadow-color}*/;
 	background-image: -webkit-gradient(linear, left top, left bottom, from( #404853 /*{c-bup-background-start}*/), to( #353b44 /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-linear-gradient( #404853 /*{c-bup-background-start}*/, #353b44 /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
@@ -392,7 +387,7 @@
 }
 .ui-btn-up-c:visited,
 .ui-btn-up-c a.ui-link-inherit {
-	color: #b29c85 /*{c-bup-color}*/;
+	color: #ffffff /*{c-bup-color}*/;
 }
 .ui-btn-hover-c {
 	border: 1px solid #434b57 /*{c-bhover-border}*/;
