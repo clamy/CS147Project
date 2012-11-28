@@ -184,26 +184,53 @@ require("php/header.php");
 ?>
 
 
-	
-
-	
-	<div data-role="content" data-theme="a" style="width:100%; height:100%; padding:0;">
-    <div data-role="page" id="page">
-    <div data-role="header" data-theme="a" id="header">
-    <a href="list.php" data-icon="arrow-l" data-ajax="false">Back</a>
-	<h1>Serentripity</h1>
-    <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
-       	
-	</div>
-			
-			
+<div data-role="page" data-add-back-btn="true" id="page">
 	<script type="text/javascript">
 	//Script to hide the navbar if the user is not logged in
 		var logged = <?php echo $logged_in;?>;
-	</script>	
+		if(logged == 1){
+			console.log("I am logged in");
+			var str ='<div data-role="footer">';
+			str += '<div data-role="navbar" id = "navbar">';
+			str += '<ul>';
+			str += '<li><a href="#popupAdd" data-rel="popup" data-position-to="window" data-transition="fade">Add Trivia</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-ajax="false" id="upvote">Upvote</a></li>';
+			str += '<li><a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-ajax="false" id="downvote">Downvote</a></li>';
+			str += '</ul>';
+			str += '</div>';
+			str += '</div>';
+			
+			$("#page").append(str);
+			//Script to highlight the buttons if we have already voted
+			function onSuccess(data) {
+    			if(data.length > 0){
+					var placevote = data[0].vote;
+					
+					
+					if(placevote == 1){
+						$("#upvote").addClass("ui-btn-active");
+					}
+					else if(placevote == -1){
+						$("#downvote").addClass("ui-btn-active");
+					}
+				}
+			
+			
+			
+			}
 		
-		
-	
+			var ajax_request = $.getJSON("php/get_vote_place.php",{placeid: <?php echo $id?>,uid: <?php echo $uid;?>},onSuccess);
+			
+	}
+	</script>
+
+	<div data-role="header" data-theme="a" id="header">
+    	<a href="list.php" data-icon="arrow-l" data-ajax="false">Back</a>
+		<h1><?php echo $associated_array["name"];?></h1>
+        <a href="#popupHelp" data-rel="popup" data-position-to="window" data-transition="fade" data-icon="info">Help</a>
+       	
+	</div><!-- /header -->
+	<div data-role="content" data-theme="a" style="width:100%; height:100%; padding:0;">
     
    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
    
@@ -354,85 +381,26 @@ require("php/header.php");
 		function onSuccessTrivia(data) {
     		console.log("Success!");
     		console.log(data);
-			var str3 = '<li data-role="list-divider" id="name"><?php echo $associated_array["name"];?>';
-    		str3 += '<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
-    
-   
-			if(logged == 1){
-				console.log("I am logged in");
-				str3 += '<a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=1" data-role = "button" data-ajax="false" data-icon = "plus" id="upvote">Like</a>';
-				str3 += '<a href="info_page.php?id=<?php echo $id;?>&voteplace=1&value=-1" data-role = "button" data-ajax="false" data-icon = "minus"id="downvote">Dislike</a>';
-			
-			}
-			str3 += '<div data-role = "button" >Score: <?php echo $associated_array["score"];?></div>';
-			str3 += ' </div>';
-    		str3 += '</li>';
-			$("#triviaList").prepend(str3);
-			$("#triviaList").trigger('create');
-			$("#triviaList").listview("refresh");
-			if(logged == 1){
-		
-			//Script to highlight the buttons if we have already voted
-			function onSuccess(data) {
-    			if(data.length > 0){
-					var placevote = data[0].vote;
-					
-					
-					if(placevote == 1){
-						$("#upvote").addClass("ui-btn-active");
-					}
-					else if(placevote == -1){
-						$("#downvote").addClass("ui-btn-active");
-					}
-				}
-			
-			
-			
-			}
-			
-		
-			var ajax_request = $.getJSON("php/get_vote_place.php",{placeid: <?php echo $id?>,uid: <?php echo $uid;?>},onSuccess);
-			
-			}
-			//Add the add button if we are logged in
-			if(logged == 1){
-				var str2 = '<li>';
-				str2 += '<div class="ui-grid-solo">';
-				str2 += '<div class="ui-block-a">';
-			 	str2 += '<a href="#popupAdd" data-role = "button" data-rel="popup" data-position-to="window" data-icon = "plus" data-transition="fade" data-mini="true">Add Fact</a>';
-				str2 += '</div>';
-				str2 += '</div>';
-				str2 += '</li>';
-				$("#triviaList").append(str2).trigger('create');
-				$("#triviaList").listview('refresh');
-				
-			}
-			
-			
 			for(var i = 0; i<data.length; i++){
 				var str = '<li>';
 				str+='<div class="ui-grid-solo">';
 				str+='<div class="ui-block-a">';
-				
+				if(logged == 1){
 					str+='<div data-role="controlgroup" data-type="horizontal" data-mini="true">';
-					
-					if(logged == 1){
 					var link = '"info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=1"';
 					
-					str+='<a href='+link+'data-role="button" data-icon="plus" data-ajax="false"'
+					str+='<a href='+link+'data-role="button" data-icon="arrow-u" data-ajax="false"'
 					str += 'id="up'+data[i].id+'"';
-					str+='>Like</a>';
+					str+='></a>';
 				
 					str+='<a href="info_page.php?id='+<?php echo $id;?>+'&votetrivia=1&triviaid='+data[i].id+'&value=-1"';
-					str+= ' data-role="button" data-icon="minus" data-ajax="false"'
+					str+= ' data-role="button" data-icon="arrow-d" data-ajax="false"'
 					str += 'id="down'+data[i].id+'"';
-					str+='>Dislike</a>';
-					}
-					str+='<div data-role ="button">Score: '+data[i].score+'</div>';
+					str+='></a>';
 					str+='</div>';
 					
 					
-				
+				}
 				str+=data[i].text;
 				str+='</div>';
 				str+='</div>';				
@@ -446,16 +414,7 @@ require("php/header.php");
 				
 				
 			}
-			var str5 = '<li data-role="list-divider">';
-				if(logged == 1){
-					str5 += 'You are currently logged in as <?php echo $_SESSION["username"];?>.';
-				}
-				else{
-					str5 += 'You are not logged in. Log in to use the voting features.';
-				}
-				str5 += '</li>';
-				$("#triviaList").append(str5).trigger('create');
-				$("#triviaList").listview('refresh');
+			
 			
 		}
 		console.log("Trying to get the trivia");
@@ -464,12 +423,8 @@ require("php/header.php");
     		{place_id: <?php echo $id?>},
     	onSuccessTrivia);
 	</script>
-    
     <ul id="triviaList" data-role="listview" >
-    
     <li>
-    
-    
     <div class="ui-grid-a">
 		<div class="ui-block-a">
             <a href="#popupPhoto" data-rel="popup" data-position-to="window" data-transition="fade"><img id="pictureW" width = "90%"></a>
@@ -482,18 +437,17 @@ require("php/header.php");
                     
         </div>
 	</div><!-- /grid-a -->
-    
-    	<div data-role="collapsible" data-mini="true" >
-   			<h3>See more pictures of this place</h3>
+    </li>
+    <li>
+    	<div data-role="collapsible" >
+   			<h3>More Pictures</h3>
    			<div id="pictureList" class="ui-grid-solo">
 				
 			</div><!-- /grid-a -->
 		</div>
     </li>
-	<li data-role="list-divider">User-submitted facts</li>
-    
+	<li data-role="list-divider">User Trivia</li>	
 	</ul>
-    
     <div data-role="popup" id="popupPhoto" data-overlay-theme="a" data-theme="a" data-corners="false">
 			<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a><img id="pictureWP" width = "85%">
 	</div>

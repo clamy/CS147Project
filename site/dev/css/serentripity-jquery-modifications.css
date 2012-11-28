@@ -1,9 +1,13 @@
 @charset "utf-8";
 .ui-li-static{
 	background-image : url("../img/dark_bkg.png");
+	color: #b29c85;
 }
 .ui-header{
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
+}
+.ui-content .ui-listview {
+    margin: 0px;
 }
