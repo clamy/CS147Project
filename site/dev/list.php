@@ -16,7 +16,7 @@ require("php/header.php");
 	<div data-role="content" data-theme="a">
         <!-- Username <?php echo $username ?> -->
     	<div id="serentripity-montage">
-   			<h3>Less than 0.5 miles away</h3>
+   			<h3>Places near you</h3>
     	</div>
     	<div data-role="popup" id="popupHelp" data-theme="a" class="ui-corner-all">
     		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>

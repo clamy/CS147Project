@@ -10,9 +10,7 @@
 
 	<link rel="stylesheet" href="jquery.mobile-1.2.0.css" />
 
-	<link rel="stylesheet" href="css/loading.css" />
-	<link rel="stylesheet" href="css/login.css" />
-    <link rel="stylesheet" href="css/jquery.mobile.swatch.i.css" />
+	<link rel="stylesheet" href="css/jquery.mobile.swatch.i.css" />
     
     <link rel="apple-touch-icon" href="img/startup_icon.jpg" />
 	<link rel="apple-touch-startup-image" href="img/logo_loading.png">
@@ -20,7 +18,9 @@
 	<link rel="stylesheet" href="css/jquery-mobile-theme/themes/serentripity-theme.css" />
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile.structure-1.2.0.min.css" /> 
     <link rel="stylesheet" href="css/serentripity-jquery-modifications.css"/>
-	
+	<link rel="stylesheet" href="css/montage.css" />
+	<link rel="stylesheet" href="css/login.css" />
+
 	<script src="jquery-1.8.2.min.js"></script>
 	<script src="jquery.mobile-1.2.0.js"></script>
     <script src="js/site.js"></script>

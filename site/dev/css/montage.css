@@ -3,3 +3,58 @@
  * Formatting for the montage application.
  */
 
+#serentripity-montage > .ui-grid-solo > div {
+    height:300px;
+}
+
+#serentripity-montage > .ui-grid-a > div {
+    height:300px;
+}
+
+#serentripity-montage > .ui-grid-solo > div > .serentripity-place-image-wide {
+    height: 100%;
+}
+
+#serentripity-montage > .ui-grid-a > div > .serentripity-place-image-wide {
+    height: 50%;
+}
+
+.serentripity-place-anchor {
+    display: block;
+    text-shadow: #666;
+    font-weight: 600;
+    text-decoration: none;
+    color: #fff;
+    background-size: 100% auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px;
+}
+
+.serentripity-place-image-wide:hover {
+    /* Make it rotate */
+    -webkit-transform: rotate(2deg);
+    -moz-transform: rotate(2deg);
+    -o-transform: rotate(2deg);
+    -ms-transform: rotate(2deg);
+    transform: rotate(2deg);
+    /* Make it move a bit */
+    position: relative;
+    bottom: -10px;
+}
+
+.serentripity-place-image-tall {
+    height: 100%;
+}
+
+    .serentripity-place-image-tall:hover {
+        /* Make it rotate */
+        -webkit-transform: rotate(-2deg);
+        -moz-transform: rotate(-2deg);
+        -o-transform: rotate(-2deg);
+        -ms-transform: rotate(-2deg);
+        transform: rotate(-2deg);
+        /* Make it move a bit */
+        position: relative;
+        top: -5px;
+    }
