@@ -23,6 +23,7 @@ require("php/header.php");
         <img width="100%" src="img/logo_loading.png" />
         <p id="serentripity-login-message"></p>
         <a id="serentripity-explore-button" data-role="button" href="list.php" data-ajax="false">Find places around me</a>
+        <a id="serentripity-login-button" data-role="button" href="#" data-ajax="false">Login or Register</a>
         <form id="serentripity-login-form" action="" data-ajax="false" method="post">
             <input id="serentripity-login-username" type="text" name="username" placeholder="Username" data-mini="true" />
             <input id="serentripity-login-password" type="password" name="password" placeholder="Password" data-mini="true"/>
@@ -91,6 +92,14 @@ require("php/header.php");
             success: handleFormResponse
         });
     });
+	
+	// We make the login / register form appear when the login / register button is pressed.
+	$("#serentripity-login-button").click(function (e) {
+		console.log("Displaying login form");
+		$("#serentripity-login-button").fadeOut(function () {
+			$("#serentripity-login-form").fadeIn();
+		});
+	});
 
     // Once the document is ready, we should display the appropriate elements
     // depending on the user's session status.
@@ -102,7 +111,7 @@ require("php/header.php");
             $("#serentripity-login-message").show();
             $("#serentripity-logout-form").show();
         } else {
-            $("#serentripity-login-form").show();
+            $("#serentripity-login-button").css("display", "block");
         }
     });
     </script>

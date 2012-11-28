@@ -8,6 +8,10 @@
     display: none;
 }
 
+#serentripity-login-button {
+    display: none;
+}
+
 #serentripity-login-message {
     display: none;
 }
