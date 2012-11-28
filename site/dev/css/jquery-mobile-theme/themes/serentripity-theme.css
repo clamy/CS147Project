@@ -48,7 +48,7 @@
 .ui-bar-a select,
 .ui-bar-a textarea,
 .ui-bar-a button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-a,
 .ui-overlay-a {
@@ -67,7 +67,7 @@
 .ui-body-a select,
 .ui-body-a textarea,
 .ui-body-a button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-a .ui-link-inherit {
 	color: #ffffff /*{a-body-color}*/;
@@ -131,7 +131,7 @@
 .ui-btn-up-a,
 .ui-btn-hover-a,
 .ui-btn-down-a {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 	text-decoration: none;
 }
 
@@ -173,7 +173,7 @@
 .ui-bar-b select,
 .ui-bar-b textarea,
 .ui-bar-b button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-b,
 .ui-overlay-b {
@@ -197,7 +197,7 @@
 .ui-body-b select,
 .ui-body-b textarea,
 .ui-body-b button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-b .ui-link-inherit {
 	color: #b29c85 /*{b-body-color}*/;
@@ -276,7 +276,7 @@
 .ui-btn-up-b,
 .ui-btn-hover-b,
 .ui-btn-down-b {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 	text-decoration: none;
 }
 
@@ -325,7 +325,7 @@
 .ui-bar-c select,
 .ui-bar-c textarea,
 .ui-bar-c button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-c,
 .ui-overlay-c {
@@ -349,7 +349,7 @@
 .ui-body-c select,
 .ui-body-c textarea,
 .ui-body-c button {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-body-c .ui-link-inherit {
 	color: #3b424c /*{c-body-color}*/;
@@ -428,7 +428,7 @@
 .ui-btn-up-c,
 .ui-btn-hover-c,
 .ui-btn-down-c {
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 	text-decoration: none;
 }
 
@@ -456,7 +456,7 @@ a.ui-link-inherit {
 	text-shadow: 0 /*{global-active-shadow-x}*/ 1px /*{global-active-shadow-y}*/ 1px /*{global-active-shadow-radius}*/ #fb9988 /*{global-active-shadow-color}*/;
 	text-decoration: none;
 	background-image: url("../../../img/red_bkg.png");
-	 font-family: Helvetica Neue /*{global-font-family}*/;
+	 font-family: Helvetica Neue, Source Sans Pro, Helvetica /*{global-font-family}*/;
 }
 .ui-btn-active:visited,
 .ui-btn-active:hover,
