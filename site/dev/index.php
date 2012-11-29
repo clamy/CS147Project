@@ -21,6 +21,7 @@ require("php/header.php");
 <div data-role="page" class="serentripity-page">
 	<div data-role="content" data-theme="a">
         <img width="100%" src="img/logo_loading.png" />
+        <p id="serentripity-intro">Serentripity is a tourism app that lets you explore monuments and places of interest around you.</p>
         <p id="serentripity-login-message"></p>
         <a id="serentripity-explore-button" data-role="button" href="list.php" data-ajax="false">Find places around me</a>
         <a id="serentripity-login-button" data-role="button" href="#" data-ajax="false">Login or Register</a>
